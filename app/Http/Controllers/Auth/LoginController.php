@@ -1,0 +1,53 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+
+
+class LoginController extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | Login Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles authenticating users for the application and
+    | redirecting them to your home screen. The controller uses a trait
+    | to conveniently provide its functionality to your applications.
+    |
+    */
+
+    use AuthenticatesUsers;
+
+    // /**
+    //  * Where to redirect users after login.
+    //  *
+    //  * @var string
+    //  */
+    protected function authenticated(Request $request, $users) {
+        if ($users->jabatan==='admin') {
+            return redirect('/dashboard');
+        } else if ($users->jabatan === 'user') {
+            return redirect('/skpd');
+        } else if ($users->jabatan === 'programmer') {
+            return redirect('/dashboard');
+        } else {
+            return redirect('/skpd');
+        }
+   }
+    // protected $redirectTo = '/request';
+
+    /**
+     * Create a new controller instance.
+    //  *
+    //  * @return void
+    //  */
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
+   
+}

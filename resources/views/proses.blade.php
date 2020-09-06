@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Progress</title>
+  <meta charset="utf-8">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/ridhowise/SiPA/b83733bfef6cd3ece739923953f83058150939cb/public/assets_dashboard/style.css">
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+
+    <!-- Font Awesome JS -->
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script> -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-cls-top" role="navigation" style="margin-bottom: 0;border-radius: 0;border:0;width:100%;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse"
+      data-target="#navbar-collapse-main">
+        <span class="sr-only">Toogle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#"><img src="https://rawcdn.githack.com/ridhowise/SiPA/6784f72a4be2f11859329ec81de5d49609acbfde/public/assets_dashboard/img/logo.png"></a>
+    </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse-main">
+
+
+        <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav">
+    <li class="active"><!-- <a href="#">Home</a></li> -->
+   <!--  <li><a href="#">Profil</a></li> -->
+   <!--  <li><a href="#"></a></li> --> 
+    <!-- <li><a href="#">Kontak</a></li>  -->
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size: 20px !important;background-color: #273c75; color:#fff;"><i class= "fa fa-user" ></i> {{ Auth::user()->name}}
+      <span class="caret"></span></a>
+      <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
+
+        {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
+        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
+        event.preventDefault();
+        document.getElementById('logout-form').submit()
+        " >Logout</a></li>
+        <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
+          {{ csrf_field() }}
+        </form>
+        <!-- <li><a href="#">CSS</a></li>
+        <li><a href="#">Bootstrap</a></li> --> 
+      </ul>
+    </li>
+  </ul>
+
+        <!-- <li><a href="{{ route('logout') }}" onclick="
+        event.preventDefault();
+        document.getElementById('logout-form').submit()
+        " >Logout</a></li>
+        <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
+          {{ csrf_field() }}
+        </form> -->
+      </ul>
+  </div>
+</div>
+</nav>
+  <div class="wrapper">
+
+      <!-- Sidebar  -->
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          
+            <h3>List Menu</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+
+          
+          <li  >
+            <a href="/skpd"><i class="fa fa-home" style="font-size:24px;color:white;opacity:0.5;"></i>
+               Home </a>
+            {{-- <ul class="collapse list-unstyled" id="homeSubmenu">
+                <!-- <li>
+                    <a href="#">apa</a>
+                </li>
+                <li>
+                    <a href="#">aja</a>
+                </li>
+                <li>
+                    <a href="#">boleh</a>
+                </li> -->
+            </ul> --}}
+        </li>
+        <li class="" >
+            <a href="/request"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Status Aplikasi</a>
+        </li>
+        <li >
+          <a href="/chat"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+      </li>    
+
+              
+
+
+      </nav>
+
+
+      <!-- Page Content  -->
+      <div id="content" style="min-height:120vh">
+
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light"  >
+              <div class="container-fluid">
+
+                  <button type="button" id="sidebarCollapse" class="btn btn-default">
+                      <i class="fa fa-align-left"></i>
+                      <span>Toggle Sidebar</span>
+                  </button>
+              </div>
+            </nav>
+
+
+<br>
+
+
+    <div class="request">
+<div class="container-fluid">
+    @if(Session::has('alert'))
+    <div class="alert alert-{{Session::get('style')}} alert-dismissable fade in">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>    
+        <strong>{{Session::get('alert')}}</strong>{{Session::get('msg')}}
+    </div>
+    @endif
+
+    
+    
+
+     
+        <?php 
+            $currentChecked = 0;
+            foreach($request->requirements as $r) {
+              if($r->status === 'Done') {
+                $currentChecked++;
+              }
+            }
+            $total = count($request->requirements);
+            $percentage = ($currentChecked/$total) * 100;
+            
+        ?>
+       
+      <div class="col-sm-12">
+        <div class="app-card" style="padding:0px">
+          <div class="container-card">
+            <a href="#"><img style="width:187px" src="../uploads/smpa.png" alt="cover" class="cover" /></a>
+            <div class="hero">         
+              <div class="details">
+                <div class="title1"><i class="fa fa-cogs" style="font-size:40px;color:white;"></i> {{ $request->aplikasi }}</div>
+                <div class="title2">{{ $request->nama }}</div> 
+                  
+                
+              </div> <!-- end details -->
+            </div> <!-- end hero -->
+            <div class="description">
+              <div class="column1">
+                
+                <a href="http://{{$request->link}}" type="button" class="btn btn-primary btn-lg btn-block">LINK DEMO</a>
+              
+                <div></div>
+               
+              </div> <!-- end column1 -->
+              <div class="column2">
+                @if ($request->maintenance == '0')
+                  <a href="" type="button" class="btn btn-success">ACTIVE</a>
+                  @elseif ($request->maintenance == '1')
+                  <a href="" type="button" class="btn btn-success">MAINTENANCE</a>
+                  @else 
+                  <a href="" type="button" class="btn btn-info">ON PROGRESS</a>
+                  @endif 
+                <br><br>
+                TOTAL PROGRESS
+                @if($percentage > 0)
+                <div class="w3-section w3-grey">
+                <div class="w3-container w3-padding-small w3-indigo w3-center" style="width:{{$percentage}}%">{{$percentage}}%</div>
+                </div>
+               @else
+               <div class="w3-section w3-grey">
+                <div class="w3-container w3-padding-small w3-grey w3-center" style="width:{{$percentage}}%">{{$percentage}}%</div>
+                </div>
+               @endif
+              </div> <!-- end column2 -->
+            </div> <!-- end description -->
+          </div> <!-- end container -->
+        </div> <!-- end card -->
+        @if($request->hapus === 1)
+        <div class="col-sm-12" style="background-color:#192a56;color:white;text-align:center;padding:30px">
+         <h3>PENGAJUAN PENGHAPUSAN APLIKASI OLEH PROGRAMMER </h3>
+         <br>
+         <div class="btn-group">
+           <a href="../hapusrequest/{{ $request->id }}"type="button" class="btn btn-danger">HAPUS <span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+         </div>
+         <div class="btn-group">
+           <a href="../cancel/{{ $request->id }}"type="button" class="btn btn-info">TOLAK  </span></a>
+         </div>
+       </div>
+       @else 
+       @endif
+      </div>
+      <div id="checkbox">
+          <div class="col-sm-12">
+          <div class="container-fluid">                  
+        <div class="table-responsive">
+          <table style="background-color:white" class="table table-bordered table-hover">
+
+            <thead>
+              <tr>
+                <!-- {{-- <th>Nama SKPD</th> --}} -->
+                <th style="">Syarat</th>
+                <th style="width:240px;text-align:center">Status {{$done}}</th>
+
+              </tr>
+            </thead>
+          <tbody>
+          @foreach ($request->requirements as $requirement)
+          <tr>
+          <td>
+          <div class="form-group">
+            <label class="control-label col-sm-2"></label>
+            <input type="hidden" name="ids[]" value="{{ $requirement->id }}">
+            <div class="col-sm-10">
+            <label class="contain"><h4>{{ $requirement->syarat }}</h4>
+              {{-- <span class="checkmark"></span> --}}
+            </label>
+          </div>
+          </div>
+          </td>
+          
+          @if ($requirement->status === 'On Progress') 
+          <td style="background-color:#F7CA18;text-align:center">
+          <h4 style="color:white;"> {{$requirement->status}}</h4>
+          </td> 
+          @elseif ($requirement->status === 'Done')
+          <td style="background-color:#03C674;text-align:center">
+            <h4 style="color:white">{{$requirement->status}}</h4>
+          </td>
+          @else 
+          <td style="background-color:#e74c3c;text-align:center">
+            <h4 style="color:white">{{$requirement->status}}</h4>
+          </td>
+          
+            @endif
+          </td>
+        </tr>
+
+          @endforeach
+          <br>
+        
+        
+          
+        </div>
+      </tbody>
+    </div>
+</table>
+</div>
+</div>
+
+</div>
+ 
+<div class="request">
+           
+<div class="col-md-6">
+  <div class="container-fluid">
+    
+  <div class="centers">
+
+@if($request->status == 1)
+  <div class="card" style="width:100%;height:350px">
+    <div class="additional">
+      <div class="user-card">
+        <div class="percent center">
+          Persentase %
+        </div>             
+      </div>
+      <div class="more-info">
+        <h3 style="color:white">Persyaratan</h3>
+        
+        @foreach ($request->requirements as $requirement)
+        <div class="coords">
+        <label class="contain"><h4>{{ $requirement->syarat }}</h4>
+                        
+        </div>
+        @endforeach
+       
+      </div>
+    </div>
+    <div class="general" style="right:35%">
+
+      <div id="piechart"></div>
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+      <script type="text/javascript">
+      // Load google charts
+       google.charts.load('current', {'packages':['corechart']});
+       google.charts.setOnLoadCallback(drawChart);
+
+      // Draw the chart and set the chart values
+      function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+      ['Task', 'Hours per Day'],
+      ['Done', {{$done}}],
+      ['On Progress', {{$onprogress}}],
+      ['To-Do', {{$todo}}],
+
+      ]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Progress', 'width':550, 'height':400,
+  colors: ['#03C674', '#F7CA18', '#e74c3c']
+  };
+                
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  chart.draw(data, options);
+}
+</script>
+    </div>
+  </div>
+ 
+
+  @else
+    <div></div>
+    @endif
+    
+        
+  
+              <div>
+            </div>
+            </div>
+        
+    </div>
+</div>
+
+@if($percentage < 100)
+  <div class="col-md-6" style="padding:30px">
+  <div id="clockdiv" style="width:100%;height:330px;background-color:white;padding:70px;font-size:70px">
+    <div><span id="day"></span><div class="smalltext">Hari</div></div>
+    <div><span id="hour"></span><div class="smalltext">Jam</div></div>
+    <div><span id="minute"></span><div class="smalltext">Menit</div></div>
+    <div><span id="second"></span><div class="smalltext">Detik</div></div>
+  </div>
+</div>
+@else
+<div></div>
+@endif
+</div>
+    </div>
+  </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
+})
+      // Set the date we're counting down to
+      var countDownDate = new Date("{{$request->countdown}} 00:00:00").getTime();
+      
+      // Update the count down every 1 second
+      var x = setInterval(function() {
+      
+        // Get today's date and time
+        var now = new Date().getTime();
+          
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+          
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+          
+        // Output the result in an element with id="countdown"
+        document.getElementById("day").innerHTML = days ;
+        document.getElementById("hour").innerHTML = hours ;
+        document.getElementById("minute").innerHTML = minutes ;
+        document.getElementById("second").innerHTML = seconds ;
+          
+        // If the count down is over, write some text 
+        if (distance < 0) {
+          clearInterval(x);
+          document.getElementById("day").innerHTML = "0" ;
+          document.getElementById("hour").innerHTML = "0" ;
+          document.getElementById("minute").innerHTML = "0" ;
+          document.getElementById("second").innerHTML = "0" ;
+        }
+      }, 1);
+    
+</script>
+
+</html>
