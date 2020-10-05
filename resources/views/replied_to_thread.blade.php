@@ -1,5 +1,5 @@
 <li><a style="" href="/requesta">
 
-    Pengajuan dari <b>{{ $notification->data['requ']['nama']}}</b>  
+    Notifikasi dari <b>{{ $notification->data['user']['name']}}</b>  
 
 </a></li>
