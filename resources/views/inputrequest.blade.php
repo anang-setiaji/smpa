@@ -173,7 +173,7 @@
                                 <label for="actual-btn" 
                                 style="background-color:#337ab7;
                                 color: white;
-                                padding: 1rem;
+                                padding: 0.7rem;
                                 font-family: sans-serif;
                                 border-radius: 0.3rem;
                                 cursor: pointer;
