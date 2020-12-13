@@ -10,7 +10,7 @@
     import ContactsList from './ContactsList';
     
 
-    const socket = io('localhost:3000');
+    const socket = io('https://smpa-chat.herokuapp.com/');
 
     export default {
         props: {
