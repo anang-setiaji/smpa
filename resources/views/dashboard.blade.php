@@ -351,7 +351,7 @@ $days = $interval->format("%r%a");
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('localhost:3000');
+    const socket = io('https://smpa-chat.herokuapp.com');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();
