@@ -24,13 +24,18 @@ class CreateRequestTable extends Migration
             $table->string('link')->nullable();
             $table->string('countdown')->nullable();
             $table->string('maintenance')->nullable();
+            $table->integer('admin_id')->unsigned();
+            $table->string('admin')->nullable();
             $table->string('logo')->nullable();
             $table->integer('users_id')->unsigned();
+            $table->integer('hapus')->nullable();
             $table->timestamps();
 
         });
         Schema::table('request', function (Blueprint $table){
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('users')->onDelete('cascade');
+
         });
     }
 

@@ -16,6 +16,8 @@ class CreateRequirementTable extends Migration
         Schema::create('requirement', function (Blueprint $table) {
             $table->increments('id');
             $table->string('syarat')->nullable();
+            $table->enum('status', ['Done', 'On Progress','To-Do'])->nullable();
+            $table->string('comment')->nullable();
             $table->string('checkbox')->nullable();
             $table->integer('request_id')->unsigned();
             $table->timestamps();
