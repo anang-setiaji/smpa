@@ -24,8 +24,12 @@ class CreateRequestTable extends Migration
             $table->string('link')->nullable();
             $table->string('countdown')->nullable();
             $table->string('maintenance')->nullable();
-            $table->integer('admin_id')->unsigned();
+            $table->integer('admin_id')->unsigned()->nullable();
             $table->string('admin')->nullable();
+            $table->string('alasan')->nullable();
+            $table->string('waktu')->nullable();
+            $table->string('develop')->nullable();
+            $table->string('userguide')->nullable();
             $table->string('logo')->nullable();
             $table->integer('users_id')->unsigned();
             $table->integer('hapus')->nullable();
