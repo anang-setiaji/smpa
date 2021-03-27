@@ -126,6 +126,8 @@
               <div class="container-fluid">
                 
 
+                  <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
+
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>
@@ -194,11 +196,11 @@
                     <td>  
                     @if ($row->status === '1' and $row->hapus === null)  
                     <div class="btn-group">
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default">Lihat Progress</a>
+                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
                     </div>
                     @elseif ($row->status === '1' and $row->hapus === 0)  
                     <div class="btn-group">
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default">Lihat Progress</a>
+                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
                     </div>
                     @elseif ($row->status === '1' and $row->hapus === 1) 
                     <div class="btn-group">

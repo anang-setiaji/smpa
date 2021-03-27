@@ -36,6 +36,8 @@ Route::group(['middleware' => ['web', 'auth',]], function() {
 
 Route::get('/skpd', 'skpdController@skpd');
 Route::get('/aplikasi', 'aplikasiController@aplikasi');
+Route::get('/aplikasi/cari','aplikasiController@cari');
+
 Route::get('/editaplikasi/{id}', 'aplikasiController@getEdit');
 Route::post('/editaplikasi/{id}', 'aplikasiController@ubahaplikasi');
 
@@ -97,6 +99,7 @@ Route::get('/dashboard', 'dashboardController@dashboard');
 
 
   Route::post('/admin', 'adminController@admin');
+  Route::get('/admin/cari','adminController@cari');
 
 
 });

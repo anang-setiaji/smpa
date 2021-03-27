@@ -47,7 +47,6 @@
     <!-- <li><a href="#">Kontak</a></li>  -->
     <li class="dropdown">
       <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="font-size: 20px !important;background-color: #273c75; color:#fff;"><i class= "fa fa-user" ></i> {{ Auth::user()->name}}
-      <span class="caret"></span></a>
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
@@ -165,11 +164,13 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light"  >
               <div class="container-fluid">
+                <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
 
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>
                   </button>
+
               </div>
             </nav>
 
@@ -204,7 +205,7 @@
        
       <div class="col-sm-12">
         <div class="app-card" style="padding:0px">
-          <div class="container-card">
+          <div class="container-card" style="height:500px">
             <a href="#"><img style="width:187px" src="../uploads/smpa.png" alt="cover" class="cover" /></a>
             <div class="hero">         
               <div class="details">
@@ -229,6 +230,10 @@
             <a href="" type="button" class="btn btn-success">ACTIVE</a>
             @elseif ($request->maintenance == 'NOT ACTIVE')
             <a href="" type="button" class="btn btn-secondary">NOT ACTIVE</a>
+            <br>
+           
+            Alasan tidak aktif : {{$request->alasan}} <br> Tanggal tidak aktif : {{$request->kapan}}
+            
             @else
             <a href="" type="button" class="btn btn-danger">ON PROGRESS</a>
             @endif 

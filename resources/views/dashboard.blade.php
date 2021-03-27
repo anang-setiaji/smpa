@@ -148,6 +148,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#192a56"  >
               <div class="container-fluid">
 
+                  <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
+
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>

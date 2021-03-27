@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="assets_dashboard/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://rawcdn.githack.com/ridhowise/SiPA/3a0d4b873f5d5db84f4ee86a01914ff9cc8d139f/style.css">
     <link rel="stylesheet" href="js/ionicons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.0.0/ionicons.min.js"></script>
     <!-- Font Awesome JS -->
@@ -33,7 +33,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="assets_dashboard/img/logo.png"></a>
+      <a class="navbar-brand" href="#"><img src="{{ asset('assets_dashboard') }}/img/logo.png"></a>
     </div>
 
       <div class="collapse navbar-collapse" id="navbar-collapse-main">
@@ -143,6 +143,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light"  >
               <div class="container-fluid">
 
+                  <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
+
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>
@@ -172,17 +174,23 @@
         <div class="row">
            <div class="col-md-12">
             <div class="container-fluid">
+              <form action="/admin/cari" method="GET" >
 
+                <input style="width:30vw;height:34px" type="text" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+  
+                <button type="submit" class="btn btn-primary"><i class= "fa fa-search" ></i></button>
+                </form>
+              <br>
             @foreach($requ as $row)
             <div class="col-md-4">
               <div class="cardadmin" style="text-align:center">
-                <img src="uploads/{{$row->foto}}" alt="Avatar" style="width:200px;height:200px">
+                <img src="{{ asset('uploads') }}/{{$row->foto}}" alt="Avatar" style="width:200px;height:200px">
                 <div class="containeradmin">
                   <h5><b>{{$row->name}}</b></h5> 
                   <p>SKPD</p> 
-                  <a href="editadmin/{{$row ->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                  <a href="{{ url('editadmin')}}/{{$row ->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 
-                  <a style="" href="hapusadmin/{{ $row->id }}"type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>            
+                  <a style="" href="{{ url('hapusadmin')}}/{{$row ->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>            
                 </div>
                 <br>
               </div>

@@ -70,7 +70,20 @@ public function simpanadmin(Request $request)
 }
 
 }
+public function cari(Request $request)
+    {
+        // menangkap data pencarian
+        $cari = $request->cari;
 
+            // mengambil data dari table pegawai sesuai pencarian data        
+        $requ =  AdminModel::where('jabatan', 'user')
+        ->where('name','LIKE',"%{$cari}%")
+        ->paginate(6);
+ 
+            // mengirim data pegawai ke view index
+        return view('admin',['requ' => $requ]);
+ 
+    }
 
 
 public function getEdit($id)

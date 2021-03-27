@@ -142,6 +142,8 @@
               <div class="container-fluid">
                 
 
+                  <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
+
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>
@@ -179,13 +181,14 @@
                         <label class="control-label col-sm-2">Status : </label>
                         <div class="col-sm-10">
                           
-                          <select name="maintenance">
+                          <select name="maintenance" onchange="yesnoCheck(this);">
                             <option {{$aplikasi->maintenance === 'MAINTENANCE' ? 'selected' : ''}} value="MAINTENANCE">MAINTENANCE</option>
                             <option {{$aplikasi->maintenance === 'ACTIVE' ? 'selected' : ''}} value="ACTIVE">ACTIVE</option>
                             <option {{$aplikasi->maintenance === 'NOT ACTIVE' ? 'selected' : ''}} value="NOT ACTIVE">NOT ACTIVE</option>
                             <option {{$aplikasi->maintenance === 'ON PROGRESS' ? 'selected' : ''}} value="ON PROGRESS">ON PROGRESS</option>
                           </select>
-                   
+
+                         
                         {{-- @if($requirement->checkbox == 1)
                           <input type="checkbox" name="checkbox[]" checked>
                         @else
@@ -195,6 +198,21 @@
                         </label> --}}
                       </div>
                       </div>
+                      <div id="ifYes" style="display: none;">
+                        <div class="form-group">
+                       <label class="control-label col-sm-2">Alasan : </label>
+                        <div class="col-sm-10">          
+                        <textarea class="form-control" name="alasan">{{ $aplikasi->alasan }}</textarea>
+                       </div>
+                       </div>
+                       <div class="form-group">
+                        <label class="control-label col-sm-2">Tanggal tidak aktif : </label>
+                         <div class="col-sm-2">          
+                         <input class="form-control" type="date" name="kapan">{{$aplikasi->kapan}}</input>
+                        </div>
+                        </div>
+                    
+                     </div>
                           <br>
                           <div class="form-group">
                             <label class="control-label col-sm-2">Link: </label>
@@ -227,6 +245,14 @@ $(document).ready(function () {
         $('#sidebar').toggleClass('active');
     });
 });
+function yesnoCheck(that) {
+    if (that.value == "NOT ACTIVE") {
+
+        document.getElementById("ifYes").style.display = "block";
+    } else {
+        document.getElementById("ifYes").style.display = "none";
+    }
+}
 </script>
 
 </html>

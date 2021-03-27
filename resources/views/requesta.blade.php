@@ -143,6 +143,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light"  >
               <div class="container-fluid">
 
+                  <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
+
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>
@@ -207,7 +209,7 @@
                     <td>{{ $row->aplikasi }}</td>
                     <td>{{ $row->penjelasan }}</td>
                     <td>
-                      <a href="uploads/{{$row->lampiran}}" download="{{$row->lampiran}}">
+                      <a href="{{ url('uploads')}}/{{$row ->lampiran }}" download="{{$row->lampiran}}">
                         <button type="button" class="btn btn-primary">
                           <i class="glyphicon glyphicon-download">
                             Download
@@ -236,7 +238,7 @@
                    ?>
                    @if ($row->status === '1')
                      <td>{{ $percentage }}%
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
+                      <a href="{{ url('proses')}}/{{$row ->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
 
                     </td>
                   @else 
@@ -254,12 +256,12 @@
                     <td>
                       @if($row->status === '1')
                       <div class="btn-group" style="pointer-events: none;">
-                        <a href="../editrequest/{{ $row->id }}" type="button" class="btn btn-secondary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                        <a href="{{ url('editrequest')}}/{{$row ->id }}" type="button" class="btn btn-secondary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         
                       </div>
                       @else
                         <div class="btn-group">
-                          <a href="../editrequest/{{ $row->id }}" type="button" class="btn btn-success"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                          <a href="{{ url('editrequest')}}/{{$row ->id }}" type="button" class="btn btn-success"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                           
                         </div>
                       @endif
@@ -310,7 +312,7 @@
                    ?>
                    @if ($row->status === '1')
                      <td>{{ $percentage }}%
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
+                      <a href="{{ url('proses')}}/{{$row ->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
 
                     </td>
 
@@ -320,12 +322,19 @@
                   
                     <td>
                         <div class="btn-group">
-                          <a href="../editprogress/{{ $row->id }}" type="button" class="btn btn-success"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
+                          <a href="{{ url('editprogress')}}/{{$row ->id }}" type="button" class="btn btn-success"><span class="glyphicon glyphicon-check" aria-hidden="true"></span></a>
                           
                         </div>
+                        @if ($percentage == 100)
+                        <div class="btn-group">
+                          <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-warning"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                          
+                        </div>
+                        @else
+                        @endif
                         <div class="btn-group">
                           {{-- <a href="editrequesta/{{ $row->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> --}}
-                          <a href="reqhapus/{{ $row->id }}"type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                          <a href="{{ url('reqhapus')}}/{{$row ->id }}" type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                         </div>
                     </td>
 

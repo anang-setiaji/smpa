@@ -90,7 +90,7 @@
 </div>
 </nav>
   <div class="wrapper">
-
+   @if(Auth::user()->jabatan == 'user')
       <!-- Sidebar  -->
       <nav id="sidebar">
           <div class="sidebar-header">
@@ -127,7 +127,50 @@
 
 
       </nav>
+      @else
+      <nav id="sidebar">
+        <div class="sidebar-header">
+          
+            <h3>List Menu</h3>
+        </div>
 
+        <ul class="list-unstyled components">
+
+          
+          <li  >
+            <li class="active" >
+              <a href="/dashboard"><i class="fa fa-home" style="font-size:24px;color:white;opacity:0.5;"></i>
+                 Home </a>
+              {{-- <ul class="collapse list-unstyled" id="homeSubmenu">
+                  <!-- <li>
+                      <a href="#">apa</a>
+                  </li>
+                  <li>
+                      <a href="#">aja</a>
+                  </li>
+                  <li>
+                      <a href="#">boleh</a>
+                  </li> -->
+              </ul> --}}
+          </li>
+          <li >
+              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+          </li>
+          <li  >
+            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+        </li>
+        <li>
+          <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+      </li>
+      <li  >
+        <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+    </li> 
+          
+              
+
+
+      </nav>
+      @endif
 
       <!-- Page Content  -->
       <div id="content">
@@ -135,6 +178,8 @@
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#192a56"  >
               <div class="container-fluid">
+
+                  <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
 
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>

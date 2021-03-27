@@ -21,7 +21,7 @@ class aplikasiController extends BaseController
     public function aplikasi()
     {
         $name = Auth::user()->id;
-        $prog = aplikasiModel::with("requirements")->where('status', 1)->where('admin_id', $name)->paginate(5);
+        $prog = aplikasiModel::with("requirements")->where('status', 1)->where('admin_id', $name)->paginate(8);
         $requ = aplikasiModel::with("requirements")->where('status', '1')->paginate(8);
         $reqq = requirementModel::get();
         $contacts = User::where('id', '!=', auth()->id())->get();
@@ -33,7 +33,27 @@ class aplikasiController extends BaseController
             ]);
     }
     
-      
+    public function cari(Request $request)
+    {
+        // menangkap data pencarian
+        $name = Auth::user()->id;
+        $cari = $request->cari;
+
+            // mengambil data dari table pegawai sesuai pencarian data        
+        $requ = aplikasiModel::with("requirements")->where('status', '1')
+        ->where('nama','LIKE',"%{$cari}%")
+        ->orWhere('aplikasi', 'LIKE', "%{$cari}%") 
+        ->paginate(6);
+
+        $prog = aplikasiModel::with("requirements")->where('status', 1)->where('admin_id', $name)
+        ->where('nama','LIKE',"%{$cari}%")
+        ->orWhere('aplikasi', 'LIKE', "%{$cari}%") 
+        ->paginate(6);
+ 
+            // mengirim data pegawai ke view index
+        return view('aplikasi',['requ' => $requ, 'prog' => $prog]);
+ 
+    }
     public function getEdit($id)
     {
         return view('editaplikasi', ['aplikasi' => aplikasiModel::findOrFail($id)]);
@@ -48,6 +68,8 @@ class aplikasiController extends BaseController
      
         $requ->aplikasi = $request->input('aplikasi');
         $requ->maintenance = $request->input('maintenance');
+        $requ->alasan = $request->input('alasan');
+        $requ->kapan = $request->input('kapan');
         $requ->link = $request->input('link');
 
 

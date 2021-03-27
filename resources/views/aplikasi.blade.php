@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link href="assets_dashboard/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://rawcdn.githack.com/ridhowise/SiPA/3a0d4b873f5d5db84f4ee86a01914ff9cc8d139f/style.css">
     <link rel="stylesheet" href="js/ionicons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.0.0/ionicons.min.js"></script>
     <!-- Font Awesome JS -->
@@ -33,7 +33,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="assets_dashboard/img/logo.png"></a>
+      <a class="navbar-brand" href="#"><img src="{{ asset('assets_dashboard') }}/img/logo.png"></a>
     </div>
 
       <div class="collapse navbar-collapse" id="navbar-collapse-main">
@@ -142,6 +142,9 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color:#192a56"  >
               <div class="container-fluid">
 
+                
+                <span class="caret"></span></a><a href="{{ url()->previous() }}" class="btn btn-default"><i class="fa fa-arrow-left" style="color:black"></i> Back </a>
+
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
                       <span>Toggle Sidebar</span>
@@ -158,7 +161,13 @@
         <strong>{{Session::get('alert')}}</strong>{{Session::get('msg')}}
     </div>
     @endif
-    
+    <form action="/aplikasi/cari" method="GET" >
+
+      <input style="width:30vw;height:34px" type="text" name="cari" placeholder="Cari" value="{{ old('cari') }}">
+
+      <button type="submit" class="btn btn-primary"><i class= "fa fa-search" ></i></button>
+      </form>
+    <br>
 
      @if(auth()->user()->jabatan == 'admin')
     @foreach ($requ as $row)
@@ -177,12 +186,16 @@ foreach($row->requirements as $r) {
 
     <div class="col-md-4">
         <div class="cardadmin" style="text-align:center;background-color:white">
-          <img src="uploads/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
+          <img src="{{ asset('uploads') }}/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
           <div class="containeradmin">
             <h4><b>{{$row->aplikasi}}</b></h4> 
             <h5><b>{{$row->nama}}</b></h5> 
-            <a href="/editaplikasi/{{ $row->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
+            <a href="{{ url('proses')}}/{{$row ->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
+
+            <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
+
             <a href="http://{{ $row->link }}" type="button" class="btn btn-primary">LINK DEMO</a>
+
             @if ($row->maintenance == 'MAINTENANCE')
             <a href="" type="button" class="btn btn-danger">MAINTENANCE</a>
             @elseif ($row->maintenance == 'ACTIVE')
@@ -201,7 +214,7 @@ foreach($row->requirements as $r) {
 @else
 <div class="col-md-4">
   <div class="cardadmin" style="text-align:center;background-color:white;opacity:0.5">
-    <img src="uploads/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
+    <img src="{{ asset('uploads') }}/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
     <div class="containeradmin">
       <h4><b>{{$row->aplikasi}}</b></h4> 
       <h5><b>{{$row->nama}}</b></h5> 
@@ -232,12 +245,15 @@ foreach($row->requirements as $r) {
 
     <div class="col-md-4">
         <div class="cardadmin" style="text-align:center;background-color:white">
-          <img src="uploads/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
+          <img src="{{ asset('uploads') }}/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
           <div class="containeradmin">
             <h4><b>{{$row->aplikasi}}</b></h4> 
             <h5><b>{{$row->nama}}</b></h5> 
-            <a href="/editaplikasi/{{ $row->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
+            <a href="{{ url('proses')}}/{{$row ->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
+
+            <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
             <a href="http://{{ $row->link }}" type="button" class="btn btn-primary">LINK DEMO</a>
+
             @if ($row->maintenance == 'MAINTENANCE')
             <a href="" type="button" class="btn btn-danger">MAINTENANCE</a>
             @elseif ($row->maintenance == 'ACTIVE')
@@ -257,7 +273,7 @@ foreach($row->requirements as $r) {
 @else
 <div class="col-md-4">
   <div class="cardadmin" style="text-align:center;background-color:white;opacity:0.5">
-    <img src="uploads/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
+    <img src="{{ asset('uploads') }}/{{$row->users->foto}}" alt="Avatar"  style="width:200px;height:200px">
     <div class="containeradmin">
       <h4><b>{{$row->aplikasi}}</b></h4> 
       <h5><b>{{$row->nama}}</b></h5> 

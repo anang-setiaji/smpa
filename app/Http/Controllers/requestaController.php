@@ -116,16 +116,22 @@ public function getDelete($id)
 public function cari(Request $requesta)
     {
         // menangkap data pencarian
+        $name = Auth::user()->id;
         $cari = $requesta->cari;
- 
+
             // mengambil data dari table pegawai sesuai pencarian data        
         $requ = requestaModel::with("requirements")
         ->where('nama','LIKE',"%{$cari}%")
         ->orWhere('aplikasi', 'LIKE', "%{$cari}%") 
         ->paginate(5);
+
+        $prog = requestaModel::with("requirements")->where('status', 1)->where('admin_id', $name)
+        ->where('nama','LIKE',"%{$cari}%")
+        ->orWhere('aplikasi', 'LIKE', "%{$cari}%") 
+        ->paginate(5);
  
             // mengirim data pegawai ke view index
-        return view('requesta',['requ' => $requ]);
+        return view('requesta',['requ' => $requ, 'prog' => $prog]);
  
     }
     
