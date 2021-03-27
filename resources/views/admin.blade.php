@@ -181,6 +181,7 @@
                 <button type="submit" class="btn btn-primary"><i class= "fa fa-search" ></i></button>
                 </form>
               <br>
+              
             @foreach($requ as $row)
             <div class="col-md-4">
               <div class="cardadmin" style="text-align:center">
