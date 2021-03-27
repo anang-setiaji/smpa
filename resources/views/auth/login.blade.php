@@ -11,7 +11,7 @@
             <div class="panel panel-default" style="height:0vh;width:auto;opacity: 1;">
                 <div class="panel-heading" style="text-align: center;background-color:#181f41;color:#fff">   
                
-                    <img src="{{asset('assets_home/img/person.png')}}" style="width:110px">
+                    <img src="{{asset('assets_home/img/personz.png')}}" style="width:110px">
 
                     <h2> SMPA</h2>
                     <h4 style="opacity:0.8">Sistem Manajemen Pengembangan Aplikasi</h4>
