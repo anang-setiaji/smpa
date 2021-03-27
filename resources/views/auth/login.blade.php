@@ -13,7 +13,7 @@
                
                     <img src="{{asset('assets_home/img/personz.png')}}" style="width:110px">
 
-                    <h2> SMPA</h2>
+                    <h2> MASI</h2>
                     <h4 style="opacity:0.8">Sistem Manajemen Pengembangan Aplikasi</h4>
                     {{-- <h5> Pemeritah Kabupaten Minahasa Tenggara </h5> --}}
                 </div>                <div class="panel-body" style="margin-top: 5%; margin-bottom: 5%">
