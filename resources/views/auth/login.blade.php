@@ -9,16 +9,10 @@
         <div class="col-md-8 col-md-offset-2">
 
             <div class="panel panel-default" style="height:0vh;width:auto;opacity: 1;">
-                <div class="panel-heading" style="text-align: center;background-color:#337ab7;color:#fff">   
-                    <img src="{{asset('assets_home/img/person.png')}}"
-                    style="width: 100px;
-                        height: 100px;
-                        border-radius: 50%;
-                        position: absolute;
-                        top: -50px;
-                        left: calc(50% - 50px);">
-                           
-                    <img class="card-img-top" src="{{asset('assets_home/img/logo.png')}}" class="img-responsive" style="width:7%;opacity:0"/>
+                <div class="panel-heading" style="text-align: center;background-color:#181f41;color:#fff">   
+               
+                    <img src="{{asset('assets_home/img/person.png')}}" style="width:110px">
+
                     <h2> SMPA</h2>
                     <h4 style="opacity:0.8">Sistem Manajemen Pengembangan Aplikasi</h4>
                     {{-- <h5> Pemeritah Kabupaten Minahasa Tenggara </h5> --}}
@@ -59,7 +53,7 @@
                         
                         <div class="form-group">
                             {{-- <div class="col-md-4 col-md-offset-4"> --}}
-                                <button type="submit" class="btn btn-primary  btn-block">
+                                <button type="submit" class="btn btn-primary  btn-block" style="background:#181f41">
                                     Login
                                 </button>
 
