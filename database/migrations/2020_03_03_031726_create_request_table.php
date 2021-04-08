@@ -17,8 +17,8 @@ class CreateRequestTable extends Migration
             $table->increments('id');
             $table->string('nama');
             $table->string('aplikasi');
-            $table->text('penjelasan');
-            $table->string('lampiran');
+            $table->text('penjelasan')->nullable();
+            $table->string('lampiran')->nullable();
             $table->string('status')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('link')->nullable();
@@ -28,6 +28,7 @@ class CreateRequestTable extends Migration
             $table->string('admin')->nullable();
             $table->string('alasan')->nullable();
             $table->string('kapan')->nullable();
+            $table->string('surat')->nullable();
             $table->string('develop')->nullable();
             $table->string('userguide')->nullable();
             $table->string('logo')->nullable();

@@ -168,8 +168,7 @@
 
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
-                      <span>Toggle Sidebar</span>
-                  </button>
+                                        </button>
 
               </div>
             </nav>

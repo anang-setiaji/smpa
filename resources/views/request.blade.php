@@ -130,8 +130,7 @@
 
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
-                      <span>Toggle Sidebar</span>
-                  </button>
+                                        </button>
               </div>
             </nav>
 
@@ -188,6 +187,13 @@
                       @elseif ($row->status === '1') 
                       <div class="btn-group">
                           <button type="button" class="btn btn-success">Diterima</button>
+                          <a href="{{ url('uploads')}}/{{$row ->surat }}" download="{{$row->surat}}">
+                            <button type="button" class="btn btn-primary">
+                              <i class="glyphicon glyphicon-download">
+                                
+                              </i>
+                             </button>
+                          </a>
                       @else
                       <button class="buttonload"><i class="fa fa-spinner fa-spin"></i> Menunggu Persetujuan</button>
                       @endif

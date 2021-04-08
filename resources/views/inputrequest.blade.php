@@ -112,8 +112,7 @@
 
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
-                      <span>Toggle Sidebar</span>
-                  </button>
+                                        </button>
               </div>
             </nav>
 
@@ -139,7 +138,7 @@
                       <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Penjelasan harap diisi</div>
                       @enderror
                       @error('lampiran')
-                      <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran harap diisi</div>
+                      <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran diisi dengan format pdf</div>
                       @enderror
                       @error('countdown')
                       <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Deadline harap diisi</div>

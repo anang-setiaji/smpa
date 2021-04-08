@@ -147,8 +147,7 @@
 
                   <button type="button" id="sidebarCollapse" class="btn btn-default">
                       <i class="fa fa-align-left"></i>
-                      <span>Toggle Sidebar</span>
-                  </button>
+                                        </button>
               </div>
             </nav>
 
@@ -167,7 +166,10 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">Edit {{ $request->aplikasi }}</div>
                   <div class="panel-body">
-                      <form class="form-horizontal" action=""  method="post">
+                    @error('surat')
+                      <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran diisi dengan format pdf</div>
+                      @enderror
+                      <form class="form-horizontal" action=""  method="post"  enctype="multipart/form-data">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
                           <input type="hidden" name="id" value="{{ $request->id }}">
           
@@ -218,6 +220,29 @@
                                 </div>
                               </div>
                               <br>
+                              <div class="form-group">
+                                <label class="control-label col-sm-2">Lampiran (PDF):</label>
+                                <div class="col-sm-10">         
+                                  
+                                  <!-- actual upload which is hidden -->
+                                  <input type="file" id="actual-btn" class="hidden" name="surat"/>                                
+                                  <!-- our custom upload button -->
+                                  <label for="actual-btn" 
+                                  style="background-color:#337ab7;
+                                  color: white;
+                                  padding: 0.7rem;
+                                  font-family: sans-serif;
+                                  border-radius: 0.3rem;
+                                  cursor: pointer;
+                                  ">Pilih File</label>
+                                  
+                                  <!-- name of file chosen -->
+                                  <span id="file-chosen" style="margin-left: 0.3rem;
+                                  font-family: sans-serif;">(Berisi surat permohonan pembuatan aplikasi,alur umum aplikasi dan data dasar aplikasi)        
+                                  </span>                              
+                                </div>
+                                
+                              </div> 
                               {{-- <div class="form-group">
                                 <label class="control-label col-sm-2"> Permintaan Hapus:</label>
                                 <div class="col-sm-10">
@@ -283,5 +308,14 @@ $(document).ready(function () {
     });
 });
 </script>
+<script type="text/javascript">
 
+  const actualBtn = document.getElementById('actual-btn');
+  
+  const fileChosen = document.getElementById('file-chosen');
+  
+  actualBtn.addEventListener('change', function(){
+    fileChosen.textContent = this.files[0].name
+  });
+  </script>
 </html>

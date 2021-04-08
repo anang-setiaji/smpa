@@ -48,7 +48,7 @@ public function simpanrequest(Request $request)
         'aplikasi' => 'required',
         'nama' => 'required',
         'penjelasan' => 'required',
-        'lampiran' => 'required',
+        'lampiran' =>  'required|mimes:pdf',
         'countdown' => 'required',
 
     ]);
@@ -110,24 +110,40 @@ public function getEdit($id)
  
 public function ubahrequest(Request $request)
 {
+    // $validatedData = $request->validate([
+        
+    //     // 'surat' =>  'required|mimes:pdf',
+       
+
+    // ]);
+
     $id     = $request->input('id');
     $requ     = requestModel::find($id);
-    
+    $file = $request->file('surat');
+  
+    $destinationPath = 'uploads';
+    $size = $file->getSize();
+    $extension = $file->getClientOriginalExtension();
+    $fileName = $file->getClientOriginalName();
+    $upload_success = $file->move($destinationPath, $fileName);
+         
+    if ($upload_success){
     $requ->aplikasi = $request->input('aplikasi');
     $requ->status = $request->input('status');
     $requ->keterangan = $request->input('keterangan');
     $requ->admin_id = $request->input('admin_id');
+    $requ->surat = $fileName;
     $requ->admin = $request->input('admin');
     $requ->hapus = $request->input('hapus');
 
 
     $requ->save();
     
+}
     $notif = User::where('jabatan', '=', 'programmer')->get();
 
     Notification::send($notif, new RepliedToThread($requ));
 
-     
     return redirect()->action('requestaController@requesta')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
 }
 
