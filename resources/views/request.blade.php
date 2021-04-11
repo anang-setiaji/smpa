@@ -194,6 +194,9 @@
                               </i>
                              </button>
                           </a>
+                          @elseif ($row->status === '2') 
+                          <button type="button" class="btn btn-primary">Existed</button>
+
                       @else
                       <button class="buttonload"><i class="fa fa-spinner fa-spin"></i> Menunggu Persetujuan</button>
                       @endif
@@ -224,8 +227,16 @@
                     <p>-</p>
                     @endif 
                     </td>
+                    @if($row->status === '2')
+                    <td>-</td>
+                    @else
                     <td>{{ $row->created_at->format('Y-m-d')}}</td>
+                    @endif
+                    @if($row->status === '2')
+                    <td>-</td>
+                    @else
                     <td>{{ $row->countdown }}</td>
+                    @endif
 
                     <td>  
                       @if ($row->link !== null) 

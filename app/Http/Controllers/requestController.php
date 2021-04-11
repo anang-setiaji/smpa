@@ -110,12 +110,12 @@ public function getEdit($id)
  
 public function ubahrequest(Request $request)
 {
-    // $validatedData = $request->validate([
+    $validatedData = $request->validate([
         
-    //     // 'surat' =>  'required|mimes:pdf',
+        'surat' =>  'required|mimes:pdf',
        
 
-    // ]);
+    ]);
 
     $id     = $request->input('id');
     $requ     = requestModel::find($id);

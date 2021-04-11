@@ -22,7 +22,7 @@ class aplikasiController extends BaseController
     {
         $name = Auth::user()->id;
         $prog = aplikasiModel::with("requirements")->where('status', 1)->where('admin_id', $name)->paginate(8);
-        $requ = aplikasiModel::with("requirements")->where('status', '1')->paginate(8);
+        $requ = aplikasiModel::with("requirements")->where('status', 1)->orwhere('status', 2)->paginate(8);
         $reqq = requirementModel::get();
         $contacts = User::where('id', '!=', auth()->id())->get();
 

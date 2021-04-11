@@ -31,12 +31,23 @@ class inputController extends BaseController
  
 public function simpanrequest(Request $request)
 {
+
+    $file = $request->file('surat');
+  
+    $destinationPath = 'uploads';
+    $size = $file->getSize();
+    $extension = $file->getClientOriginalExtension();
+    $fileName = $file->getClientOriginalName();
+    $upload_success = $file->move($destinationPath, $fileName);
+         
+    if ($upload_success){
    
             $requ = new requestModel;
             $requ->nama = $request->input('nama');
             $requ->aplikasi = $request->input('aplikasi');
             $requ->penjelasan = $request->input('penjelasan');
-            $requ->status = true;
+            $requ->status = 2;
+            $requ->surat = $fileName;
             $requ->maintenance = "ACTIVE";
             $requ->link = $request->input('link');
             $requ->keterangan = $request->input('keterangan');
@@ -54,7 +65,7 @@ public function simpanrequest(Request $request)
                 $reqq->request_id = $requ->id;
                 $reqq->save();
             }
-
+        }
             return redirect()->action('requestController@request')->with('style', 'success')->with('alert', 'Berhasil Disimpan ! ')->with('msg', 'Menunggu persetujuan');
         
         }
