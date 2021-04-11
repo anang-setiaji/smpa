@@ -128,9 +128,12 @@
     
               
               <div class="container">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">Form Aplikasi</div>
-                    <div class="panel-body">
+                <div class="panel panel-default">
+                  <div class="panel-heading">Form &nbsp;
+                  <a href="inputrequest" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Request</a>
+                  <a href="inputaplikasi" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Aplikasi</a>
+            
+                </div>
                       @error('surat')
                       <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran diisi dengan format pdf</div>
                       @enderror

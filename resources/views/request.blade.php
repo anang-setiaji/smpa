@@ -203,15 +203,15 @@
                     </td>
                     
                     <td>  
-                    @if ($row->status === '1' and $row->hapus === null)  
+                    @if ($row->status === '1' or $row->status === '2' and $row->hapus === null)  
                     <div class="btn-group">
                       <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
                     </div>
-                    @elseif ($row->status === '1' and $row->hapus === 0)  
+                    @elseif ($row->status === '1' or $row->status === '2' and $row->hapus === 0)  
                     <div class="btn-group">
                       <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
                     </div>
-                    @elseif ($row->status === '1' and $row->hapus === 1) 
+                    @elseif ($row->status === '1' or $row->status === '2' and $row->hapus === 1) 
                     <div class="btn-group">
                       <a href="proses/{{ $row->id }}" type="button" class="btn btn-danger">Pengajuan Hapus Aplikasi</a>
                     </div>
