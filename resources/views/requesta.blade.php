@@ -207,6 +207,17 @@
                     </div></td>
                     <td>{{ $row->aplikasi }}</td>
                     <td>{{ $row->penjelasan }}</td>
+                    @if($row->lampiran === null)
+                    <td>
+                      <a href="{{ url('uploads')}}/{{$row ->surat }}" download="{{$row->surat}}">
+                        <button type="button" class="btn btn-primary">
+                          <i class="glyphicon glyphicon-download">
+                            Download
+                          </i>
+                         </button>
+                      </a>
+                    </td>
+                    @else
                     <td>
                       <a href="{{ url('uploads')}}/{{$row ->lampiran }}" download="{{$row->lampiran}}">
                         <button type="button" class="btn btn-primary">
@@ -216,7 +227,9 @@
                          </button>
                       </a>
                     </td>
+                    @endif
                     <td>
+                  
                       @if ($row->status === '0') 
                       <button type="button" class="btn btn-danger">Ditolak</button>
                       @elseif ($row->status === '1') 
@@ -255,7 +268,7 @@
                   </td>
 
                     <td>
-                      @if($row->status === '1')
+                      @if($row->status === '1' or $row->status === '2' )
                       <div class="btn-group" style="pointer-events: none;">
                         <a href="{{ url('editrequest')}}/{{$row ->id }}" type="button" class="btn btn-secondary"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
                         
@@ -283,8 +296,9 @@
                     </div></td>
                     <td>{{ $row->aplikasi }}</td>
                     <td>{{ $row->penjelasan }}</td>
+                    @if($row->lampiran === null)
                     <td>
-                      <a href="uploads/{{$row->lampiran}}" download="{{$row->lampiran}}">
+                      <a href="{{ url('uploads')}}/{{$row ->surat }}" download="{{$row->surat}}">
                         <button type="button" class="btn btn-primary">
                           <i class="glyphicon glyphicon-download">
                             Download
@@ -292,6 +306,17 @@
                          </button>
                       </a>
                     </td>
+                    @else
+                    <td>
+                      <a href="{{ url('uploads')}}/{{$row ->lampiran }}" download="{{$row->lampiran}}">
+                        <button type="button" class="btn btn-primary">
+                          <i class="glyphicon glyphicon-download">
+                            Download
+                          </i>
+                         </button>
+                      </a>
+                    </td>
+                    @endif
                     <td>
                       @if ($row->status === '0') 
                       <button type="button" class="btn btn-danger">Ditolak</button>
