@@ -192,11 +192,25 @@
                               <i class="glyphicon glyphicon-download">
                                 
                               </i>
-                             </button>
                           </a>
+                        </button>
+                        @if ($row->maintenance == 'MAINTENANCE')
+                         <a href="" type="button" class="btn btn-danger">Maintenance</a>
+                         @elseif ($row->maintenance == 'ACTIVE')
+                         <a href="" type="button" class="btn btn-success">Active</a>
+                         @elseif ($row->maintenance == 'NOT ACTIVE')
+                         <a href="" type="button" class="btn btn-secondary">Not Active</a>
+                         @endif
                           @elseif ($row->status === '2') 
                           <button type="button" class="btn btn-primary">Existed</button>
-
+                        </button>
+                        @if ($row->maintenance == 'MAINTENANCE')
+                         <a href="" type="button" class="btn btn-danger">Maintenance</a>
+                         @elseif ($row->maintenance == 'ACTIVE')
+                         <a href="" type="button" class="btn btn-success">Active</a>
+                         @elseif ($row->maintenance == 'NOT ACTIVE')
+                         <a href="" type="button" class="btn btn-secondary">Not Active</a>
+                         @endif
                       @else
                       <button class="buttonload"><i class="fa fa-spinner fa-spin"></i> Menunggu Persetujuan</button>
                       @endif
@@ -258,6 +272,10 @@
 
                 <td>
                         <div class="btn-group">
+                          @if($row->maintenance != null)
+                          <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
+                          @else
+                          @endif
                           {{-- <a href="editrequesta/{{ $row->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> --}}
                           <a href="hapusrequest/{{ $row->id }}"type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                         </div>

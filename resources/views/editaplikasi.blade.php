@@ -90,8 +90,9 @@
 </nav>
   <div class="wrapper">
 
-      <!-- Sidebar  -->
-      <nav id="sidebar">
+    @if(Auth::user()->jabatan == 'user')
+    <!-- Sidebar  -->
+    <nav id="sidebar">
         <div class="sidebar-header">
           
             <h3>List Menu</h3>
@@ -99,40 +100,77 @@
 
         <ul class="list-unstyled components">
 
-          
-          <li>
-            <li >
-              <a href="/dashboard"><i class="fa fa-home" style="font-size:24px;color:white;opacity:0.5;"></i>
-                 Home </a>
-              {{-- <ul class="collapse list-unstyled" id="homeSubmenu">
-                  <!-- <li>
-                      <a href="#">apa</a>
-                  </li>
-                  <li>
-                      <a href="#">aja</a>
-                  </li>
-                  <li>
-                      <a href="#">boleh</a>
-                  </li> -->
-              </ul> --}}
-          </li>
-          <li class="active">
-              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
-          </li>
-          <li  >
-            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+          <li class="active" >
+            <a href="/skpd"><i class="fa fa-home" style="font-size:24px;color:white;opacity:0.5;"></i>
+               Home </a>
+            {{-- <ul class="collapse list-unstyled" id="homeSubmenu">
+                <!-- <li>
+                    <a href="#">apa</a>
+                </li>
+                <li>
+                    <a href="#">aja</a>
+                </li>
+                <li>
+                    <a href="#">boleh</a>
+                </li> -->
+            </ul> --}}
         </li>
         <li >
-          <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+            <a href="/request"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Status Aplikasi</a>
+        </li>
+        <li >
+          <a href="/chat"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat           
+            <span class="badge unread-indicator" style="background-color:red;font-size:15px;width:20px;height:20px"></span>
+          </a>       
+        </li>
+        
+
+
+    </nav>
+    @else
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        
+          <h3>List Menu</h3>
+      </div>
+
+      <ul class="list-unstyled components">
+
+        
+        <li  >
+          <li class="active" >
+            <a href="/dashboard"><i class="fa fa-home" style="font-size:24px;color:white;opacity:0.5;"></i>
+               Home </a>
+            {{-- <ul class="collapse list-unstyled" id="homeSubmenu">
+                <!-- <li>
+                    <a href="#">apa</a>
+                </li>
+                <li>
+                    <a href="#">aja</a>
+                </li>
+                <li>
+                    <a href="#">boleh</a>
+                </li> -->
+            </ul> --}}
+        </li>
+        <li >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+        </li>
+        <li  >
+          <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
       </li>
       <li>
-        <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+        <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
     </li>
-              
+    <li  >
+      <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+  </li> 
+        
+            
 
 
-      </nav>
-
+    </nav>
+    @endif
 
       <!-- Page Content  -->
       <div id="content">
@@ -168,7 +206,7 @@
                     <form class="form-horizontal" action=""  method="post">
                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
                       <input type="hidden" name="id" value="{{ $aplikasi->id }}">
-      
+                    
                       <div class="form-group">
                         <label class="control-label col-sm-2">Nama Aplikasi:</label>
                         <div class="col-sm-10">          

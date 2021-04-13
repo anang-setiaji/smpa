@@ -77,8 +77,7 @@ class aplikasiController extends BaseController
         $requ->save();
         
          
-        return redirect()->action('aplikasiController@aplikasi')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
-        
+     return redirect()->back()->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
         
     }
 }
