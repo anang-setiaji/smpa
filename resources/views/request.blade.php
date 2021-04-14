@@ -346,10 +346,10 @@
       <img src="" />
     </div>
 
-    <div class="row text-center">
+    {{-- <div class="row text-center">
       <h3>The Large Modal</h3>
       <a href="#" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#largeModal">Click to open Modal</a>
-  </div>
+  </div> --}}
 
   <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
     <div class="modal-dialog modal-lg">
