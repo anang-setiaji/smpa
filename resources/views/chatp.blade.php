@@ -16,7 +16,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="assets_dashboard/style.css" rel="stylesheet" />
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="https://smpa-chat.herokuapp.com/socket.io/socket.io.js"></script>
+    <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script>
 
 
     <!-- Styles -->

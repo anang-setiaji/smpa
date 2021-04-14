@@ -9,9 +9,11 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <script src="{{ asset('js/app.js') }}" defer></script>
-      <script src="https://smpa-chat.herokuapp.com/socket.io/socket.io.js"></script>
+      <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="assets_dashboard/style.css" rel="stylesheet" />
 
@@ -87,7 +89,6 @@
 
         <ul class="list-unstyled components">
 
-          
           <li  >
             <a href="/skpd"><i class="fa fa-home" style="font-size:24px;color:white;opacity:0.5;"></i>
                Home </a>
@@ -104,18 +105,23 @@
             </ul> --}}
         </li>
         <li class="active" >
-            <a href="/request"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Status Aplikasi</a>
+        <a href="/request"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Status Aplikasi</a>
+        </li>
+        <li >
+        <a href="/inputrequest"><i class="fa fa-plus-square" style="font-size:24px;color:white;opacity:0.5;"></i> Pengajuan Aplikasi</a>
+        </li>
+        <li >
+        <a href="/inputaplikasi"><i class="fas fa-pen-square"style="font-size:24px;color:white;opacity:0.5;"></i> Input Aplikasi</a>
         </li>
         <li >
           <a href="/chat"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat           
             <span class="badge unread-indicator" style="background-color:red;font-size:15px;width:20px;height:20px"></span>
-          </a>
+          </a>       
+        </li>
+        
 
-      </li>
-              
 
-
-      </nav>
+    </nav>
 
 
       <!-- Page Content  -->
@@ -145,8 +151,8 @@
     @endif
     <div class="panel panel-default">
         <div class="panel-heading">List Data &nbsp;
-        <a href="inputrequest" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Request</a>
-        <a href="inputaplikasi" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Aplikasi</a>
+        {{-- <a href="inputrequest" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Request</a>
+        <a href="inputaplikasi" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Aplikasi</a> --}}
   
       </div>
         <div class="panel-body">
@@ -340,14 +346,37 @@
       <img src="" />
     </div>
 
-    
+    <div class="row text-center">
+      <h3>The Large Modal</h3>
+      <a href="#" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#largeModal">Click to open Modal</a>
+  </div>
+
+  <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
+        </div>
+        <div class="modal-body">
+          <h3>Modal Body</h3>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('https://smpa-chat.herokuapp.com');
+    const socket = io('http://192.168.100.230:8000');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();

@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <script src="js/main.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
-  {{-- <script src="https://smpa-chat.herokuapp.com/socket.io/socket.io.js"></script> --}}
+  <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -425,7 +425,7 @@
 
 <script type="text/javascript">
   $(document).ready(function () {
-      const socket = io('https://smpa-chat.herokuapp.com');
+      const socket = io('http://192.168.100.230:8000');
       socket.on('updateWarning', () => {
         console.log('masuk');
         getUpdate();

@@ -1919,7 +1919,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-var socket = io('https://smpa-chat.herokuapp.com/');
+var socket = io('http://192.168.100.230:8000/');
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {

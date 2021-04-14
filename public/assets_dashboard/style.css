@@ -1,13 +1,15 @@
 
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 body {
-
+    padding-right: 0 !important;
     background-image: url(https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4765278.jpg);
 }
 
 h4{
   font-size: 15px;
 }
+
+
 
 p {
 
@@ -55,6 +57,8 @@ a:hover {
     SIDEBAR STYLE
 ----------------------------------------------------- */
 
+
+
 .wrapper {
     display: flex;
     width: 100%;
@@ -84,6 +88,7 @@ a:hover {
     padding: 20px 0;
     /* border-bottom: 1px solid #47748b; */
 }
+
 
 #sidebar ul p {
     color: #fff;
@@ -423,7 +428,7 @@ position: relative;
   vertical-align: middle;
 }
 
-}
+
 .cssanimations .cd-timeline-img.is-hidden,.cssanimations .cd-timeline-content.is-hidden {
   visibility: hidden;
 }
@@ -1186,7 +1191,7 @@ html, body {
   top: 10%;
   right: -2px;
   height: 80%;
-  border-left: 2px solid rgba(0,0,0,0.025);*/
+  border-left: 2px solid rgba(0,0,0,0.025);
 }
 
 
@@ -1430,8 +1435,8 @@ html, body {
 }
 
 /* The Modal (background) */
-.modal {
-  display: block; /* Hidden by default */
+.modals {
+  display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
   padding-top: 100px; /* Location of the box */
@@ -1683,6 +1688,8 @@ html, body {
   }
   
 
+
+  
 .description {
   
   bottom: 0px;
@@ -1949,3 +1956,7 @@ html, body {
 .unread-indicator {
   display: none;
 }
+
+
+
+

@@ -75,6 +75,8 @@ Route::get('/dashboard', 'dashboardController@dashboard');
 
   Route::get('/progress', 'progressController@progress');
 
+  Route::get('/detail/{id}', 'detailController@detail');
+
 
   Route::get('/requesta', 'requestaController@requesta');
   Route::get('/requesta/cari','requestaController@cari');

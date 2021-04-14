@@ -10,15 +10,15 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <script src="js/main.js"></script>
       <script src="{{ asset('js/app.js') }}" defer></script>
-      <script src="https://smpa-chat.herokuapp.com/socket.io/socket.io.js"></script>
+      {{-- <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script> --}}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="assets_dashboard/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="js/ionicons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.0.0/ionicons.min.js"></script>
     <!-- Font Awesome JS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {{-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script> --}}
 </head>
@@ -116,7 +116,13 @@
               </ul> --}}
           </li>
           <li >
-              <a href="/request"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Status Aplikasi</a>
+          <a href="/request"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Status Aplikasi</a>
+          </li>
+          <li >
+          <a href="/inputrequest"><i class="fa fa-plus-square" style="font-size:24px;color:white;opacity:0.5;"></i> Pengajuan Aplikasi</a>
+          </li>
+          <li >
+          <a href="/inputaplikasi"><i class="fas fa-pen-square"style="font-size:24px;color:white;opacity:0.5;"></i> Input Aplikasi</a>
           </li>
           <li >
             <a href="/chat"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat           
@@ -329,7 +335,7 @@ foreach($row->requirements as $r) {
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('https://smpa-chat.herokuapp.com/');
+    // const socket = io('http://192.168.100.230:8000/');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();
