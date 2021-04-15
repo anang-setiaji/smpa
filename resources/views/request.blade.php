@@ -221,29 +221,38 @@
                       <button class="buttonload"><i class="fa fa-spinner fa-spin"></i> Menunggu Persetujuan</button>
                       @endif
                     </td>
-                    
+                    <?php 
+                    $currentChecked = 0;
+                    foreach($row->requirements as $r) {
+                    if($r->status === 'Done') {
+                     $currentChecked++;
+                    }
+                    }
+                    $total = count($row->requirements);
+                    $percentage = ($currentChecked/$total) * 100;
+                   ?>
                     <td>  
-                    @if ($row->status === '1'  and $row->hapus === null)  
+                    @if ($percentage == 100  and $row->hapus === null)  
                     <div class="btn-group">
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
+                      <a href="" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i> Detail Aplikasi </a>
                     </div>
-                    @elseif ($row->status === '1' and $row->hapus === 0)  
+                    @elseif ($percentage == 100 and $row->hapus === 0)  
                     <div class="btn-group">
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
+                      <a href="" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i> Detail Aplikasi </a>
                     </div>
-                    @elseif ($row->status === '1' and $row->hapus === 1) 
+                    @elseif ( $percentage == 100 and $row->hapus === 1) 
                     <div class="btn-group">
                       <a href="proses/{{ $row->id }}" type="button" class="btn btn-danger">Pengajuan Hapus Aplikasi</a>
                     </div>
-                    @elseif ($row->status === '2'  and $row->hapus === null)  
+                    @elseif ( $row->status === '1' and $percentage != 100 and $row->hapus === null) 
                     <div class="btn-group">
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
+                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Detail Progress </a>
                     </div>
-                    @elseif ($row->status === '2' and $row->hapus === 0)  
+                    @elseif ( $row->status === '1' and $percentage != 100 and $row->hapus === 0) 
                     <div class="btn-group">
-                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Lihat Detail </a>
+                      <a href="proses/{{ $row->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i> Detail Progress </a>
                     </div>
-                    @elseif ($row->status === '2' and $row->hapus === 1) 
+                    @elseif ( $row->status === '1' and $percentage != 100 and $row->hapus === 1) 
                     <div class="btn-group">
                       <a href="proses/{{ $row->id }}" type="button" class="btn btn-danger">Pengajuan Hapus Aplikasi</a>
                     </div>
@@ -255,6 +264,7 @@
                     <div class="btn-group">
                       <a href="proses/{{ $row->id }}" type="button" class="btn btn-danger">Pengajuan Hapus Aplikasi</a>
                     </div>
+                    
                     @else
                     <p>-</p>
                     @endif 
@@ -284,15 +294,16 @@
                       
                       {{$row->admin_name}}
                       <div class="btn-group">
-                        <button onclick="openForm({{$row->admin_id}})" type="button" class="btn btn-success" ><i class="fa fa-comments" style="color:white"></i></button>
+                        {{-- <button onclick="openForm({{$row->admin_id}})" type="button" class="btn btn-success" ><i class="fa fa-comments" style="color:white"></i></button> --}}
                       </div>
                     </td>
 
                 <td>
+                  
                         <div class="btn-group">
-                          @if($row->maintenance != null)
+                          @if($row->maintenance != null or $percentage == 100)
                           <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
-                          @else
+                          @else 
                           @endif
                           {{-- <a href="editrequesta/{{ $row->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> --}}
                           <a href="hapusrequest/{{ $row->id }}"type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
@@ -346,25 +357,45 @@
       <img src="" />
     </div>
 
-    {{-- <div class="row text-center">
-      <h3>The Large Modal</h3>
-      <a href="#" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#largeModal">Click to open Modal</a>
-  </div> --}}
+   
 
-  <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true">
+  <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true" >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
         </div>
-        <div class="modal-body">
-          <h3>Modal Body</h3>
+        <div class="modal-body" style="background-color:#f0f0f0;">
+          <figure class="snip0056 blue">
+            <figcaption>
+              <h2>Nama Aplikasi</h2>
+              <p>Penjelasan mengenai aplikasi aja</p>
+              <a href="http://" type="button" class="btn btn-primary btn-lg btn-block" style=>LINK </a>
+
+              <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
+            </figcaption><img src="https://i.ibb.co/Khc9B04/Manset-Putih.png" alt="sample8" />
+          
+
+            <div class="position">Aplikasi</div>
+          </figure>
+
+          <br>
+          <div class="owl-carousel owl-theme mt-5">
+            <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
+            <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
+            <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
+            <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
+            <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
+            <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
+            <div class="item"><h4>7</h4></div>
+            <div class="item"><h4>8</h4></div>
+            <div class="item"><h4>9</h4></div>
+            <div class="item"><h4>10</h4></div>
+            <div class="item"><h4>11</h4></div>
+          </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
+        
       </div>
     </div>
   </div>
@@ -419,5 +450,30 @@ function closeForm() {
 //   document.getElementById("myForm").style.display = "block";
 // }
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.green.min.css"/>
+<script>
+jQuery(document).ready(function($){
+  $('.owl-carousel').owlCarousel({
+ 
+    margin:10,
+    nav:true,
+    responsive:{
+      0:{
+        items:1
+      },
+      600:{
+        items:2
+      },
+      1000:{
+        items:3
+      }
+    }
+  })
+})
+</script>
+
 
 </html>
