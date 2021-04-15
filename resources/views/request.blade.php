@@ -364,7 +364,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel">Large Modal</h4>
+          <h4 class="modal-title" id="myModalLabel">Masih ngetes</h4>
         </div>
         <div class="modal-body" style="background-color:#f0f0f0;">
           <figure class="snip0056 blue">
