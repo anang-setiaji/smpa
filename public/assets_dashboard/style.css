@@ -1499,7 +1499,18 @@ html, body {
   color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.modal{
+  overflow: auto; /* Enable scroll if needed */
+
+}
+
+.modal-dialog{
+  overflow-y: initial !important
+}
+.modal-body{
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
+}
 
 .modal-footer {
   padding: 2px 16px;

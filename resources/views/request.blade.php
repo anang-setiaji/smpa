@@ -360,7 +360,7 @@
    
 
   <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true" >
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog-scrollable modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -395,7 +395,18 @@
             <div class="item"><h4>11</h4></div>
           </div>
         </div>
-        
+        <br>
+
+        <button class="btn btn-primary btn-lg btn-block" id="developers">Developer team  <i class="fas fa-chevron-down"></i></button>
+        <div class="detaildevelopers" style="display:none">
+          <p>This is a paragraph with little content.</p>
+          <p>This is another small paragraph.</p>
+        </div>
+        <button class="btn btn-primary btn-lg btn-block" id="assets">Assets <i class="fas fa-chevron-down"></i> </button>
+        <div class="assets" style="display:none">
+          <p>This is a paragraph with little content.</p>
+          <p>This is another small paragraph.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -475,5 +486,16 @@ jQuery(document).ready(function($){
 })
 </script>
 
-
+<script>
+  $(document).ready(function(){
+    $('#developers').click(function(){
+      $('.detaildevelopers').toggle();
+    });
+  });
+  $(document).ready(function(){
+    $('#assets').click(function(){
+      $('.assets').toggle();
+    });
+  });
+  </script>
 </html>
