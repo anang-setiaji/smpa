@@ -302,7 +302,7 @@
                   
                         <div class="btn-group">
                           @if($row->maintenance != null or $percentage == 100)
-                          <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
+                          <a href="{{ url('editstatus')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
                           @else 
                           @endif
                           {{-- <a href="editrequesta/{{ $row->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a> --}}

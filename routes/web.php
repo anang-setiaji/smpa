@@ -41,6 +41,8 @@ Route::get('/aplikasi/cari','aplikasiController@cari');
 Route::get('/editaplikasi/{id}', 'aplikasiController@getEdit');
 Route::post('/editaplikasi/{id}', 'aplikasiController@ubahaplikasi');
 
+Route::get('/editstatus/{id}', 'requestController@getstatus');
+Route::post('/editstatus/{id}', 'requestController@ubahstatus');
 
 Route::get('/dashboard', 'dashboardController@dashboard');
 

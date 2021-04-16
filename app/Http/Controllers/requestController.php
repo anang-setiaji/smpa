@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Notification;
 use App\Http\Models\requestModel;
 use App\Http\Models\requirementModel;
 use App\Http\Models\AdminModel;
+use App\Http\Models\detailModel;
+use App\Http\Models\picModel;
 use App\Message;
 use App\Events\NewMessage;
 use App\Notifications\RepliedToThread;
@@ -240,8 +242,52 @@ public function downfunc(){
     }
 
     
-
+  
     
+    public function getstatus($id)
+    {
+
+
+        return view('editstatus', ['request' => requestModel::with("requirements")->findOrFail($id)]);
+
+    }
+     
+    public function ubahstatus(Request $request)
+    {
+
+        // $validatedData = $request->validate([
+        
+        //     'filenames' =>  'required|mimes:jpg,png',
+           
+    
+        // ]);
+       
+        $id     = $request->input('id');
+        $requ     = requestModel::with("requirements")->findOrFail($id);
+
+
+    if($request->hasfile('filenames'))
+     {
+        foreach($request->file('filenames') as $file)
+        {
+            $name = time().'.'.$file->extension();
+            $file->move(public_path().'/uploads/', $name);  
+            $data[] = $name;  
+        }
+     }
+    
+        $requ->aplikasi = $request->input('aplikasi');
+        $requ->maintenance = $request->input('maintenance');
+        $requ->alasan = $request->input('alasan');
+        $requ->kapan = $request->input('kapan');
+        $requ->link = $request->input('link');
+        $requ->logo = $request->input('logo');
+        $requ->userguide = $request->input('userguide');
+        $requ->filenames=json_encode($data);
+        $requ->save();
+         
+        return redirect()->action('requestController@request')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
+    }
     
 
 

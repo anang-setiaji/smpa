@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('jabatan');
             $table->string('foto')->nullable();
             $table->string('profile_image')->nullable();
+            $table->string('asal')->nullable();
+            $table->string('contact')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();
         });

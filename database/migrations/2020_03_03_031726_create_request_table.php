@@ -29,6 +29,7 @@ class CreateRequestTable extends Migration
             $table->string('alasan')->nullable();
             $table->string('kapan')->nullable();
             $table->string('surat')->nullable();
+            $table->string('filenames')->nullable();
             $table->string('develop')->nullable();
             $table->string('userguide')->nullable();
             $table->string('logo')->nullable();
