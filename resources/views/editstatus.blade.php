@@ -267,14 +267,37 @@
                          
                           {{-- @foreach ($request->details as $detail) --}}
                           {{-- <input type="hidden" name="ids[]" value="{{ $detail->id }}"> --}}
-                          <div class="form-group">
+                          {{-- <div class="form-group">
                             <label class="control-label col-sm-2">Aset: </label>
-                            <div class="col-sm-10">          
+                            <div class="col-sm-10">           --}}
                               {{-- {{ dd($request->details) }} --}}
-                              <textarea class="form-control" name="userguide">{{$request->userguide}}</textarea>
+                              {{-- <textarea class="form-control" name="userguide">{{$request->userguide}}</textarea>
                             </div>
-                          </div>
+                          </div> --}}
                          {{-- @endforeach --}}
+                         <div class="form-group">
+                          <label class="control-label col-sm-2">Logo Aplikasi:</label>
+                          <div class="col-sm-10">         
+                            
+                            <!-- actual upload which is hidden -->
+                            <input type="file" id="actual-btn" class="hidden" name="logo"/>                                
+                            <!-- our custom upload button -->
+                            <label for="actual-btn" 
+                            style="background-color:#337ab7;
+                            color: white;
+                            padding: 0.7rem;
+                            font-family: sans-serif;
+                            border-radius: 0.3rem;
+                            cursor: pointer;
+                            ">Pilih File</label>
+                            
+                            <!-- name of file chosen -->
+                            <span id="file-chosen" style="margin-left: 0.3rem;
+                            font-family: sans-serif;">(Logo)        
+                            </span>                              
+                          </div>
+                          
+                        </div> 
                           <div class="form-group">
                             <label class="control-label col-sm-2">Gambar aplikasi: </label>
                             <div class="col-sm-10">          
@@ -298,6 +321,7 @@
                         </div>
                         
                           <br>
+                          <div class="col-md-12" style="margin-bottom:10px"></div>
                           
                       <div class="form-group">        
                         <div class="col-sm-offset-2 col-sm-10">
@@ -331,7 +355,16 @@ function yesnoCheck(that) {
 }
 </script>
 
+<script type="text/javascript">
 
+  const actualBtn = document.getElementById('actual-btn');
+  
+  const fileChosen = document.getElementById('file-chosen');
+  
+  actualBtn.addEventListener('change', function(){
+    fileChosen.textContent = this.files[0].name
+  });
+  </script>
 <script type="text/javascript">
   $(document).ready(function() {
     $(".btn-success").click(function(){ 

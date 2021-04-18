@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\requestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,10 @@ Route::get('/dashboard', 'dashboardController@dashboard');
 
   
   Route::get('/chats', 'chatsController@chats');
+
+  
+  Route::get('/request/{id}', 'requestController@status');
+
 
 
   Route::get('/hapusrequest/{id}', 'requestController@getDelete');

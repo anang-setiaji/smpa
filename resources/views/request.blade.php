@@ -9,10 +9,10 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <script src="{{ asset('js/app.js') }}" defer></script>
-      <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="assets_dashboard/style.css" rel="stylesheet" />
@@ -234,11 +234,11 @@
                     <td>  
                     @if ($percentage == 100  and $row->hapus === null)  
                     <div class="btn-group">
-                      <a href="" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i> Detail Aplikasi </a>
+                      <a href="" onclick="fetchdata({{$row->id}})" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i> Detail Aplikasi </a>
                     </div>
                     @elseif ($percentage == 100 and $row->hapus === 0)  
                     <div class="btn-group">
-                      <a href="" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i> Detail Aplikasi </a>
+                      <a href="" onclick="fetchdata({{$row->id}})" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i> Detail Aplikasi </a>
                     </div>
                     @elseif ( $percentage == 100 and $row->hapus === 1) 
                     <div class="btn-group">
@@ -364,24 +364,26 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title" id="myModalLabel">Masih ngetes</h4>
+          <h4 class="modal-title" id="myModalLabel">Details</h4>
         </div>
         <div class="modal-body" style="background-color:#f0f0f0;">
-          <figure class="snip0056 blue">
-            <figcaption>
-              <h2>Nama Aplikasi</h2>
+          <figure class="snip0056 blue" >
+            <figcaption id="caption">
+              <h2 id="namaaplikasi">Nama Aplikasi</h2>
+              {{-- <h2 id="namaaplikasi"></h2> --}}
               <p>Penjelasan mengenai aplikasi aja</p>
               <a href="http://" type="button" class="btn btn-primary btn-lg btn-block" style=>LINK </a>
 
               <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
-            </figcaption><img src="https://i.ibb.co/Khc9B04/Manset-Putih.png" alt="sample8" />
-          
-
+            </figcaption><img id="logo" src="" alt="sample8" />
+                      
+            {{-- <img id="logo" src="https://i.ibb.co/Khc9B04/Manset-Putih.png" alt="sample8" /> --}}
             <div class="position">Aplikasi</div>
           </figure>
 
           <br>
           <div class="owl-carousel owl-theme mt-5">
+            sdsdsds
             <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
             <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
             <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
@@ -418,7 +420,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('http://192.168.100.230:8000');
+  const socket = io('http://15.3.22.90:8000');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();
@@ -484,6 +486,8 @@ jQuery(document).ready(function($){
     }
   })
 })
+
+
 </script>
 
 <script>
@@ -498,4 +502,26 @@ jQuery(document).ready(function($){
     });
   });
   </script>
+
+<script type="text/javascript">
+  function fetchdata(id) {
+    $.ajax({
+        type:"GET",
+        url:"{{url('request')}}/"+id+",
+        success:function(res){
+        console.log('res hehe');
+        $(".snip0056 #logo").attr('src','uploads/'+res.data.logo);
+        $(".snip0056 #namaaplikasi").html(res.data.aplikasi);
+        $("#largeModal [id='penjelasan']").val(res.data.penjelasan);
+        $("#largeModal [id='link']").val(res.data.link);
+        $("#largeModal [name='id']").val(id);
+
+      }
+    })
+  }
+</script>
+
+{{-- <script>
+  
+</script> --}}
 </html>

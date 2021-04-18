@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <script src="js/main.js"></script>
       <script src="{{ asset('js/app.js') }}" defer></script>
-      {{-- <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script> --}}
+      <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -335,12 +335,7 @@ foreach($row->requirements as $r) {
 
 <script type="text/javascript">
 $(document).ready(function () {
-    // const socket = io('http://192.168.100.230:8000/');
-    socket.on('updateWarning', () => {
-      console.log('masuk');
-      getUpdate();
-    });
-    getUpdate();
+    
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
@@ -378,5 +373,12 @@ function closeForm() {
 //   document.getElementById("myForm").style.display = "block";
 // }
 </script>
-
+<script>
+  const socket = io('http://15.3.22.90:8000/');
+    socket.on('updateWarning', () => {
+      console.log('masuk');
+      getUpdate();
+    });
+    getUpdate();
+</script>
 </html>

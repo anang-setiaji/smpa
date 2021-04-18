@@ -246,12 +246,22 @@ public function downfunc(){
     
     public function getstatus($id)
     {
-
+       
 
         return view('editstatus', ['request' => requestModel::with("requirements")->findOrFail($id)]);
 
     }
      
+    public function status($id)
+    {
+    $data = requestModel::with("requirements")->findOrFail($id);
+
+    return response()->json([
+        'data' => $data
+    ]);
+    }
+    
+
     public function ubahstatus(Request $request)
     {
 
@@ -275,19 +285,29 @@ public function downfunc(){
             $data[] = $name;  
         }
      }
-    
+
+     $file = $request->file('logo');
+ 
+     $destinationPath = 'uploads';
+     $size = $file->getSize();
+     $extension = $file->getClientOriginalExtension();
+     $fileName = $file->getClientOriginalName();
+     $upload_success = $file->move($destinationPath, $fileName);
+
         $requ->aplikasi = $request->input('aplikasi');
         $requ->maintenance = $request->input('maintenance');
         $requ->alasan = $request->input('alasan');
         $requ->kapan = $request->input('kapan');
         $requ->link = $request->input('link');
         $requ->logo = $request->input('logo');
-        $requ->userguide = $request->input('userguide');
+        // $requ->userguide = $fileName;
+        $requ->logo = $fileName;
         $requ->filenames=json_encode($data);
         $requ->save();
          
         return redirect()->action('requestController@request')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
     }
+    
     
 
 
