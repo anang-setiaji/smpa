@@ -382,22 +382,15 @@
           </figure>
 
           <br>
-          <div class="owl-carousel owl-theme mt-5">
+          <div class="owl-carousel owl-theme mt-5" id="carouselimg">
             
             <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
             <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
             <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
             <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
-            <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
-            <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
-            <div class="item"><h4>7</h4></div>
-            <div class="item"><h4>8</h4></div>
-            <div class="item"><h4>9</h4></div>
-            <div class="item"><h4>10</h4></div>
-            <div class="item"><h4>11</h4></div>
           </div>
         </div>
-        <br>
+        
 
         <button class="btn btn-primary btn-lg btn-block" id="developers">Developer team  <i class="fas fa-chevron-down"></i></button>
         <div class="detaildevelopers" style="display:none">
@@ -417,6 +410,8 @@
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
 <script>
   console.log('fetchdata');
 
@@ -425,7 +420,14 @@ function fetchdata(id) {
     method:'GET',
     url:"{{url('request')}}/"+id,
     success:function(res){
-      console.log('res hehe');
+      // console.log('res hehe');
+      // const images = JSON.parse(res.data.filenames);
+      // let el = '';
+      // images.forEach(function(image){
+      //   el += '<div class="item"><a href=""><img src="uploads/'+image+'"></a></div>'
+      // });
+      // console.log(el);
+      // $('#carouselimg').html(el);
       $(".snip0056 #logo").attr('src','uploads/'+res.data.logo);
       $(".snip0056 #namaaplikasi").html(res.data.aplikasi);
       $(".snip0056 #penjelasan").html(res.data.penjelasan);
@@ -436,8 +438,8 @@ function fetchdata(id) {
 }
 
 </script>
-
 <script type="text/javascript">
+
 $(document).ready(function () {
     
     $('#sidebarCollapse').on('click', function () {
@@ -517,7 +519,6 @@ jQuery(document).ready(function($){
   });
  
   </script>
-
 
 {{-- <script>
   const socket = io('http://15.3.22.90:8000');
