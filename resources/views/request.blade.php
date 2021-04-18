@@ -375,9 +375,9 @@
               <a href="http://" type="button" class="btn btn-primary btn-lg btn-block" style=>LINK </a>
 
               <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
-            </figcaption><img id="logo" src="" alt="sample8" />
+            </figcaption>
                       
-            {{-- <img id="logo" src="https://i.ibb.co/Khc9B04/Manset-Putih.png" alt="sample8" /> --}}
+            <img id="logo" src="https://i.ibb.co/Khc9B04/Manset-Putih.png" alt="sample8" />
             <div class="position">Aplikasi</div>
           </figure>
 
