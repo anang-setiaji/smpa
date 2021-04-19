@@ -275,16 +275,18 @@ public function downfunc(){
         $id     = $request->input('id');
         $requ     = requestModel::with("requirements")->findOrFail($id);
 
-
+            $data = [];
     if($request->hasfile('filenames'))
      {
+        //  dd($request->file('filenames'));
         foreach($request->file('filenames') as $file)
         {
-            $name = time().'.'.$file->extension();
+            $name = sha1($file->getClientOriginalName().microtime()).'.'.$file->extension();
             $file->move(public_path().'/uploads/', $name);  
             $data[] = $name;  
         }
      }
+   
 
      $file = $request->file('logo');
  

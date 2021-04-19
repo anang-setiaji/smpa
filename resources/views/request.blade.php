@@ -384,10 +384,7 @@
           <br>
           <div class="owl-carousel owl-theme mt-5" id="carouselimg">
             
-            <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
-            <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
-            <div class="item"><a href=""><img src="assets_dashboard/img/sdsdsd.jpg"></a></div>
-            <div class="item"><a href=""><img src="assets_dashboard/img/catsaaa.jpg"></a></div>
+           
           </div>
         </div>
         
@@ -412,32 +409,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
-<script>
-  console.log('fetchdata');
-
-function fetchdata(id) {
-  $.ajax({
-    method:'GET',
-    url:"{{url('request')}}/"+id,
-    success:function(res){
-      // console.log('res hehe');
-      // const images = JSON.parse(res.data.filenames);
-      // let el = '';
-      // images.forEach(function(image){
-      //   el += '<div class="item"><a href=""><img src="uploads/'+image+'"></a></div>'
-      // });
-      // console.log(el);
-      // $('#carouselimg').html(el);
-      $(".snip0056 #logo").attr('src','uploads/'+res.data.logo);
-      $(".snip0056 #namaaplikasi").html(res.data.aplikasi);
-      $(".snip0056 #penjelasan").html(res.data.penjelasan);
-      $(".snip0056 #link").attr('href','https://'+res.data.link);
-      $("#largeModal [name='id']").val(id);
-    }
-  });
-}
-
-</script>
 <script type="text/javascript">
 
 $(document).ready(function () {
@@ -500,11 +471,40 @@ jQuery(document).ready(function($){
         items:3
       }
     }
-  })
+  });
+  
+  window.fetchdata = function (id) {
+      $.ajax({
+        method:'GET',
+        url:"{{url('request')}}/"+id,
+        success:function(res){
+          const carousel = $('.owl-carousel');
+          carousel.trigger('destroy.owl.carousel'); 
+          carousel.find('.owl-stage-outer').children().unwrap();
+          carousel.removeClass("owl-center owl-loaded owl-text-select-on");
+
+          const images = JSON.parse(res.data.filenames);
+          let el = '';
+          images.forEach(function(image){
+            el += `
+              <div class="item"><a href=""><img src="uploads/`+image+`"></a></div>
+            `
+          });
+          carousel.html(el);
+          carousel.owlCarousel();
+          $(".snip0056 #logo").attr('src','uploads/'+res.data.logo);
+          $(".snip0056 #namaaplikasi").html(res.data.aplikasi);
+          $(".snip0056 #penjelasan").html(res.data.penjelasan);
+          $(".snip0056 #link").attr('href','https://'+res.data.link);
+          $("#largeModal [name='id']").val(id);
+        }
+      });
+    }
 })
 
-
 </script>
+
+
 
 <script>
   $(document).ready(function(){
