@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  {{-- <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script> --}}
+  <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link href="assets_dashboard/style.css" rel="stylesheet" />
@@ -391,8 +391,8 @@
 
         <button class="btn btn-primary btn-lg btn-block" id="developers">Developer team  <i class="fas fa-chevron-down"></i></button>
         <div class="detaildevelopers" style="display:none">
-          <p>This is a paragraph with little content.</p>
-          <p>This is another small paragraph.</p>
+          <p id="admin">This is a paragraph with little content.</p>
+         
         </div>
         {{-- <button class="btn btn-primary btn-lg btn-block" id="assets">Assets <i class="fas fa-chevron-down"></i> </button>
         <div class="assets" style="display:none">
@@ -495,6 +495,7 @@ jQuery(document).ready(function($){
           $(".snip0056 #logo").attr('src','uploads/'+res.data.logo);
           $(".snip0056 #namaaplikasi").html(res.data.aplikasi);
           $(".snip0056 #penjelasan").html(res.data.penjelasan);
+          $(".detaildevelopers #admin").html(res.data.admin.name);
           $(".snip0056 #link").attr('href','https://'+res.data.link);
           $("#largeModal [name='id']").val(id);
         }
@@ -520,12 +521,12 @@ jQuery(document).ready(function($){
  
   </script>
 
-{{-- <script>
+<script>
   const socket = io('http://15.3.22.90:8000');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();
     });
     getUpdate();
-</script> --}}
+</script>
 </html>

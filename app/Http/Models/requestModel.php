@@ -20,6 +20,10 @@ class requestModel extends Model
     {
       return $this->belongsTo('App\Http\Models\AdminModel');
     }
+    public function admin()
+    {
+      return $this->belongsTo('App\Http\Models\AdminModel','admin_id');
+    }
 }
  
 ?>

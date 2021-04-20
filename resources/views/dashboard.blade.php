@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.0.0/ionicons.min.js"></script>
     <!-- Font Awesome JS -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script>
+    <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {{-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -352,7 +352,7 @@ $days = $interval->format("%r%a");
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('http://192.168.100.230:8000');
+    const socket = io('http://15.3.22.90:8000');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();

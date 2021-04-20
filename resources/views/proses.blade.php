@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://rawcdn.githack.com/anang-setiaji/smpa/dec02092223f537e9b5100fed42309e3c1dbdcbc/style.css">
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="http://192.168.100.230:8000/socket.io/socket.io.js"></script>
+    <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
 
     <!-- Font Awesome JS -->
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script> -->

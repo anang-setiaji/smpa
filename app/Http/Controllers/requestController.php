@@ -254,7 +254,7 @@ public function downfunc(){
      
     public function status($id)
     {
-    $data = requestModel::with("requirements")->findOrFail($id);
+    $data = requestModel::with("admin")->findOrFail($id);
 
     return response()->json([
         'data' => $data
