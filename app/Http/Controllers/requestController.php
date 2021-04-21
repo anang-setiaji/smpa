@@ -248,8 +248,7 @@ public function downfunc(){
     {
         $requ     = requestModel::with("requirements")->findOrFail($id);
         $pictures = json_decode($requ->filenames, true);
-
-
+        
         return view('editstatus', ['request' => requestModel::with("requirements")->findOrFail($id),'pictures' => $pictures,]);
 
     }
@@ -277,7 +276,8 @@ public function downfunc(){
         $id     = $request->input('id');
         $requ     = requestModel::with("requirements")->findOrFail($id);
         $pictures = json_decode($requ->filenames, true);
-            $data = [];
+        $data = [];
+
     if($request->hasfile('filenames'))
      {
         //  dd($request->file('filenames'));
@@ -304,10 +304,12 @@ public function downfunc(){
      $requ->kapan = $request->input('kapan');
      $requ->link = $request->input('link');
      // $requ->userguide = $fileName;
+     $requ->filenames = $request->input('filenames');
      $requ->logo = $fileName;
      $requ->filenames=json_encode($data);
      $requ->save();
      }
+     
      else{
 
         $requ->aplikasi = $request->input('aplikasi');
@@ -317,7 +319,6 @@ public function downfunc(){
         $requ->link = $request->input('link');
         $requ->logo = $request->input('logo');
         // $requ->userguide = $fileName;
-        $requ->logo = $request->input('logo');
         $requ->filenames=json_encode($data);
         $requ->save();
      }    
