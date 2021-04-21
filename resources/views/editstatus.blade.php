@@ -290,14 +290,47 @@
                             border-radius: 0.3rem;
                             cursor: pointer;
                             ">Pilih File</label>
+                            @if($request->logo != null)
                             
                             <!-- name of file chosen -->
                             <span id="file-chosen" style="margin-left: 0.3rem;
-                            font-family: sans-serif;">(Logo)        
+                            font-family: sans-serif;"> 
+                            <input type="hidden" name="logo" class="form-control" value="{{$request->logo}}">{{$request->logo}} </input>
+
+                            @else
+                            <span id="file-chosen" style="margin-left: 0.3rem;
+                            font-family: sans-serif;">(Logo)  
+                            @endif    
                             </span>                              
                           </div>
                           
                         </div> 
+
+                        @if($request->filenames != null)
+                        <div class="form-group">
+                          <label class="control-label col-sm-2">Gambar aplikasi: </label>
+                          <div class="col-sm-10">          
+                        <div class="input-group hdtuto control-group lst increment" >
+                          <input type="file" name="filenames[]" class="myfrm form-control">
+                          <div class="input-group-btn"> 
+                            <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                          </div>
+                        </div>
+                      </div>
+                      @foreach ($pictures as $picture) 
+                      <div class="col-sm-10">
+                        <div class="clone hide">
+                          <div class="hdtuto control-group lst input-group" style="margin-top:10px">
+                            <input type="file" name="filenames[]" class="myfrm form-control" value="{{$picture}}">
+                            <div class="input-group-btn"> 
+                              <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                           
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      @endforeach
+                      @else
                           <div class="form-group">
                             <label class="control-label col-sm-2">Gambar aplikasi: </label>
                             <div class="col-sm-10">          
@@ -319,7 +352,7 @@
                             </div>
                           </div>
                         </div>
-                        
+                        @endif
                           <br>
                           <div class="col-md-12" style="margin-bottom:10px"></div>
                           

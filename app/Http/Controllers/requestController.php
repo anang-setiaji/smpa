@@ -246,9 +246,11 @@ public function downfunc(){
     
     public function getstatus($id)
     {
-       
+        $requ     = requestModel::with("requirements")->findOrFail($id);
+        $pictures = json_decode($requ->filenames, true);
 
-        return view('editstatus', ['request' => requestModel::with("requirements")->findOrFail($id)]);
+
+        return view('editstatus', ['request' => requestModel::with("requirements")->findOrFail($id),'pictures' => $pictures,]);
 
     }
      
@@ -274,7 +276,7 @@ public function downfunc(){
        
         $id     = $request->input('id');
         $requ     = requestModel::with("requirements")->findOrFail($id);
-
+        $pictures = json_decode($requ->filenames, true);
             $data = [];
     if($request->hasfile('filenames'))
      {
@@ -287,14 +289,26 @@ public function downfunc(){
         }
      }
    
-
+     if($requ->logo === null)
+     {
      $file = $request->file('logo');
- 
+     
      $destinationPath = 'uploads';
      $size = $file->getSize();
      $extension = $file->getClientOriginalExtension();
      $fileName = $file->getClientOriginalName();
      $upload_success = $file->move($destinationPath, $fileName);
+     $requ->aplikasi = $request->input('aplikasi');
+     $requ->maintenance = $request->input('maintenance');
+     $requ->alasan = $request->input('alasan');
+     $requ->kapan = $request->input('kapan');
+     $requ->link = $request->input('link');
+     // $requ->userguide = $fileName;
+     $requ->logo = $fileName;
+     $requ->filenames=json_encode($data);
+     $requ->save();
+     }
+     else{
 
         $requ->aplikasi = $request->input('aplikasi');
         $requ->maintenance = $request->input('maintenance');
@@ -303,10 +317,10 @@ public function downfunc(){
         $requ->link = $request->input('link');
         $requ->logo = $request->input('logo');
         // $requ->userguide = $fileName;
-        $requ->logo = $fileName;
+        $requ->logo = $request->input('logo');
         $requ->filenames=json_encode($data);
         $requ->save();
-         
+     }    
         return redirect()->action('requestController@request')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
     }
     
