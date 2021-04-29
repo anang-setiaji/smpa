@@ -56,28 +56,68 @@ class aplikasiController extends BaseController
     }
     public function getEdit($id)
     {
-        return view('editaplikasi', ['aplikasi' => aplikasiModel::findOrFail($id)]);
+        $requ     = aplikasiModel::with("requirements")->findOrFail($id);
+        $pictures = json_decode($requ->filenames, true);
+        
+        return view('editaplikasi', ['request' => aplikasiModel::with("requirements")->findOrFail($id),'pictures' => $pictures,]);
     }
      
     public function ubahaplikasi(Request $request)
     {
      
-        $requ     = new aplikasiModel;
+        
         $id     = $request->input('id');
-        $requ     = aplikasiModel::find($id);
+        $requ     = aplikasiModel::with("requirements")->findOrFail($id);
+        $pictures = json_decode($requ->filenames, true);
+        $data = [];
+
+    if($request->hasfile('filenames'))
+     {
+        //  dd($request->file('filenames'));
+        foreach($request->file('filenames') as $file)
+        {
+            $name = sha1($file->getClientOriginalName().microtime()).'.'.$file->extension();
+            $file->move(public_path().'/uploads/', $name);  
+            $data[] = $name;  
+        }
+     }
+   
+     if($requ->logo === null)
+     {
+     $file = $request->file('logo');
      
+     $destinationPath = 'uploads';
+     $size = $file->getSize();
+     $extension = $file->getClientOriginalExtension();
+     $fileName = $file->getClientOriginalName();
+     $upload_success = $file->move($destinationPath, $fileName);
+     $requ->aplikasi = $request->input('aplikasi');
+     $requ->maintenance = $request->input('maintenance');
+     $requ->alasan = $request->input('alasan');
+     $requ->kapan = $request->input('kapan');
+     $requ->link = $request->input('link');
+     // $requ->userguide = $fileName;
+     $requ->filenames = $request->input('filenames');
+     $requ->logo = $fileName;
+     $requ->filenames=json_encode($data);
+     $requ->save();
+     }
+     
+     else{
+
         $requ->aplikasi = $request->input('aplikasi');
         $requ->maintenance = $request->input('maintenance');
         $requ->alasan = $request->input('alasan');
         $requ->kapan = $request->input('kapan');
         $requ->link = $request->input('link');
-
-
-
+        $requ->logo = $request->input('logo');
+        // $requ->userguide = $fileName;
+        $requ->filenames=json_encode($data);
         $requ->save();
+     }    
         
          
-        return redirect()->action('aplikasiController@aplikasi')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');        
+        return redirect()->action('requestaController@requesta')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');        
     }
 }
 

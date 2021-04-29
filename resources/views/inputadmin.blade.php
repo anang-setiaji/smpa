@@ -47,8 +47,9 @@
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
-        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
-        event.preventDefault();
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        <li><a style="" href="{{ route('logout') }}" onclick="        event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
@@ -99,19 +100,28 @@
                   </li> -->
               </ul> --}}
           </li>
-          <li>
-              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+          @if(count(auth()->user()->unreadNotifications) != 0)
+          <li  onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
           </li>
-          <li  >
-            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+          @else
+          <li >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
         </li>
-        <li>
-          <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+        @endif
+          <li>
+            <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+        </li>
+  
+        <li  >
+          <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
       </li>
-          
-      <li>
-        <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
-    </li>
+        <li>
+          <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
+      </li>
+        <li  >
+          <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+      </li> 
               
 
 
@@ -152,15 +162,39 @@
             <form class="form-horizontal" action=""  method="post" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="form-group">
+                  @error('password')
+                  <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Password harap diisi</div>
+                  @enderror
+                  @error('foto')
+                  <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Foto diisi dengan format png atau jpg</div>
+                  @enderror
+                  @error('name')
+                  <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Name Harap disi</div>
+                  @enderror
+                  @error('contact')
+                  <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Email Harap disi</div>
+                  @enderror
+                  @error('jabatan')
+                  <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Peran Harap disi</div>
+                  @enderror
+                  @error('email')
+                  <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Username harap diisi</div>
+                  @enderror
                   <label class="control-label col-sm-2">Username:</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="email" >
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label col-sm-2">Nama SKPD:</label>
+                  <label class="control-label col-sm-2">Nama Lengkap:</label>
                   <div class="col-sm-10">
                     <input type="text" class="form-control" name="name" >
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="control-label col-sm-2">Email / Kontak:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="contact" >
                   </div>
                 </div>
                 <div class="form-group" style="display:none">
@@ -173,8 +207,8 @@
                   <label class="control-label col-sm-2">Peran:</label>
                   <div class="col-sm-10">
                     <select name="jabatan" style="top:0px;left:0px;padding:0px;position: relative;">
+                      <option value="">Pilih </option>
                       <option value="admin">Admin</option>
-                      <option value="user">User</option>
                       <option value="programmer">Programmer</option>
                     </select>
                   </div>
@@ -186,14 +220,31 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="control-label col-sm-2">Foto:</label>
-                  <div class="col-sm-10">
-                    <input type="file" name="foto">
+                  <label class="control-label col-sm-2">Foto :</label>
+                  <div class="col-sm-10">         
+                    
+                    <!-- actual upload which is hidden -->
+                    <input type="file" id="actual-btn" class="hidden" name="foto"/>                                
+                    <!-- our custom upload button -->
+                    <label for="actual-btn" 
+                    style="background-color:#337ab7;
+                    color: white;
+                    padding: 0.7rem;
+                    font-family: sans-serif;
+                    border-radius: 0.3rem;
+                    cursor: pointer;
+                    ">Pilih File</label>
+                    
+                    <!-- name of file chosen -->
+                    <span id="file-chosen" style="margin-left: 0.3rem;
+                    font-family: sans-serif;">       
+                    </span>                              
                   </div>
-                </div>
+                  
+                </div> 
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default" onclick="return confirm('Apakah data sudah benar dan lengkap?');">Submit</button>
                   </div>
                 </div>
             </form>
@@ -211,5 +262,14 @@ $(document).ready(function () {
     });
 });
 </script>
+<script type="text/javascript">
 
+  const actualBtn = document.getElementById('actual-btn');
+  
+  const fileChosen = document.getElementById('file-chosen');
+  
+  actualBtn.addEventListener('change', function(){
+    fileChosen.textContent = this.files[0].name
+  });
+  </script>
 </html>

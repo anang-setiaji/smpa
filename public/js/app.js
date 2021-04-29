@@ -1919,7 +1919,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 
-var socket = io('http://15.3.22.90:8000/');
+var socket = io('http://36.67.25.4:8000/');
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: {

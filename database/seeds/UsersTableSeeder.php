@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
             'name'  => 'admin',
             'email' => 'admin',
             'password'  => bcrypt('secret'),
+            'foto' => '1618817127.png',
             'jabatan'  => 'admin',
             'remember_token' => bcrypt('secret')
     ]);

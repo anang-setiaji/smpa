@@ -65,8 +65,9 @@
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
-        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
-        event.preventDefault();
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        <li><a style="" href="{{ route('logout') }}" onclick="        event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
@@ -117,18 +118,28 @@
                   </li> -->
               </ul> --}}
           </li>
-          <li class="active">
-              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
-          </li>
-          <li  >
-            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+          @if(count(auth()->user()->unreadNotifications) != 0)
+        <li  onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
         </li>
+        @else
         <li >
+          <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
+      </li>
+      @endif
+        <li>
           <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
       </li>
-      <li>
-        <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+
+      <li  >
+        <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
     </li>
+      <li>
+        <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
+    </li>
+      <li  >
+        <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+    </li> 
               
 
 
@@ -168,6 +179,9 @@
                   <div class="panel-body">
                     @error('surat')
                       <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran diisi dengan format pdf</div>
+                      @enderror
+                      @error('status')
+                      <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Status harap diisi</div>
                       @enderror
                       <form class="form-horizontal" action=""  method="post"  enctype="multipart/form-data">
                           <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -260,6 +274,8 @@
                                   <textarea class="form-control" name="keterangan">{{ $request->keterangan }}</textarea>
                                 </div>
                               </div>
+                              <div id="ifYes" style="display: none;">
+
                               <div class="form-group">
                                 <label class="control-label col-sm-2">Pilih Programmer:</label>
                                 <div class="col-sm-10">
@@ -272,7 +288,7 @@
                                 </div>
                               </div>
 
-                              
+                            </div>
                               
                               
                               {{-- <div class="form-group">
@@ -287,7 +303,7 @@
                               <br>
                           <div class="form-group">        
                             <div class="col-sm-offset-2 col-sm-10">
-                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <button type="submit" class="btn btn-primary" onclick="return confirm('Apakah data sudah benar?');">Submit</button>
                             </div>
                           </div>
                       </form>
@@ -318,4 +334,14 @@ $(document).ready(function () {
     fileChosen.textContent = this.files[0].name
   });
   </script>
+<script>
+  $('input[type=radio][name=status]').change(function() {
+    if (this.value == 1) {
+      document.getElementById("ifYes").style.display = "block";
+    }
+    else if (this.value == 0) {
+      document.getElementById("ifYes").style.display = "none";
+    }
+});
+</script>
 </html>

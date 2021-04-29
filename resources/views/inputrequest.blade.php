@@ -49,8 +49,9 @@
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
-        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
-        event.preventDefault();
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        <li><a style="" href="{{ route('logout') }}" onclick="        event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
@@ -138,8 +139,6 @@
               <div class="container">
                 <div class="panel panel-default">
                     <div class="panel-heading">Form &nbsp;
-                    <a href="inputrequest" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Request</a>
-                    <a href="inputaplikasi" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Aplikasi</a>
               
                   </div>
                   <div class="panel-body">
@@ -155,12 +154,15 @@
                       @error('countdown')
                       <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Deadline harap diisi</div>
                       @enderror
+                      @error('syarat')
+                      <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Syarat harap diisi</div>
+                      @enderror
+                    
                         <form class="form-horizontal" action=""  method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
-                              <label class="control-label col-sm-2">Nama SKPD:</label>
                               <div class="col-sm-10">
-                                <input type="text" style="width:400px; height:30px;"  name="nama" value="{{ Auth::user()->name}}" readonly>
+                                <input type="hidden" style="width:400px; height:30px;"  name="nama" value="{{ Auth::user()->name}}" readonly>
                               </div>
                             </div>
                             
@@ -224,7 +226,7 @@
                           <div class="form-group">
                           <label class="control-label col-sm-2">Deadline: </label>
                           <div class="col-sm-10">          
-                          <input type="date" name="countdown">
+                          <input id="txtDate" type="date" name="countdown">
                           </div>
                           </div>
                            
@@ -237,7 +239,7 @@
                             </div> -->
                             <div class="form-group">        
                               <div class="col-sm-offset-2 col-sm-10">
-                                <button style="background-color:#337ab7;color:white;"type="submit" class="btn btn-default">Submit</button>
+                                <button style="background-color:#337ab7;color:white;"type="submit" onclick="return confirm('Apakah data sudah benar dan lengkap?');" class="btn btn-default">Submit</button>
                               </div>
                             </div>
                         </form>
@@ -285,5 +287,21 @@ actualBtn.addEventListener('change', function(){
   fileChosen.textContent = this.files[0].name
 });
 </script>
-
+<script>
+  $(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+   
+    $('#txtDate').attr('min', maxDate);
+});
+</script>
 </html>

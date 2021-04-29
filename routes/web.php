@@ -20,9 +20,16 @@ Route::get('/', function () {
 Route::get('/admin', 'adminController@admin');
 Route::get('/inputadmin', 'adminController@getInput');
 Route::post('/inputadmin', 'adminController@simpanadmin');
-Route::get('/editadmin/{id}', 'adminController@getEdit');
-Route::post('/editadmin/{id}', 'adminController@ubahadmin');
+Route::get('/editadmin/{email}', 'adminController@getEdit');
+Route::post('/editadmin/{email}', 'adminController@ubahadmin');
 Route::get('/hapusadmin/{id}', 'adminController@getDelete');
+
+Route::get('/daftarskpd', 'adminController@daftarskpd');
+Route::get('/inputskpd', 'adminController@getInputSkpd');
+Route::post('/inputskpd', 'adminController@simpanskpd');
+Route::get('/editskpd/{id}', 'adminController@getEditSkpd');
+Route::post('/editskpd/{id}', 'adminController@ubahskpd');
+Route::get('/hapusskpd/{id}', 'adminController@getDelete');
  
 Route::get('password/change', 'Auth\AuthController@changePassword');
  Route::post('password/change', 'Auth\AuthController@postChangePassword');
@@ -73,7 +80,6 @@ Route::get('/dashboard', 'dashboardController@dashboard');
 
   
   Route::get('/request/{id}', 'requestController@status');
-
 
 
   Route::get('/hapusrequest/{id}', 'requestController@getDelete');

@@ -65,8 +65,9 @@
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
-        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
-        event.preventDefault();
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        <li><a style="" href="{{ route('logout') }}" onclick="        event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
@@ -116,19 +117,29 @@
                       <a href="#">boleh</a>
                   </li> -->
               </ul> --}}
+            </li>
+              @if(count(auth()->user()->unreadNotifications) != 0)
+              <li  onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+                  <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
+              </li>
+              @else
+              <li >
+                <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
+            </li>
+            @endif
+              <li>
+                <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+            </li>
+      
+            <li  >
+              <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
           </li>
-          <li class="active">
-              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+            <li>
+              <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
           </li>
-          <li  >
-            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
-        </li>
-        <li >
-          <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
-      </li>
-      <li>
-        <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
-    </li>
+            <li  >
+              <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+          </li> 
               
 
 
@@ -177,7 +188,6 @@
                                 <div><span id="day"></span><div class="smalltext">Hari</div></div>
                                 <div><span id="hour"></span><div class="smalltext">Jam</div></div>
                                 <div><span id="minute"></span><div class="smalltext">Menit</div></div>
-                                <div><span id="second"></span><div class="smalltext">Detik</div></div>
                               </div>
                             </div>
                           </div>
@@ -196,13 +206,13 @@
                                 <label class="contain"><h5>{{ $requirement->syarat }}</h5>
                                   @if($requirement->status === 'Done')
                                   <select name="select[]" style="pointer-events: none">
-                                    <option {{$requirement->status === 'Done' ? 'selected' : ''}} value="Done">Done</option>
+                                    <option {{$requirement->status === 'Done' ? 'selected' : ''}} value="Done">DONE</option>
                                   </select>
                                   @else
                                   <select name="select[]">
-                                    <option {{$requirement->status === 'Done' ? 'selected' : ''}} value="Done">Done</option>
-                                    <option {{$requirement->status === 'On Progress' ? 'selected' : ''}} value="On Progress">On Progress</option>
-                                    <option {{$requirement->status === 'To-Do' ? 'selected' : ''}} value="To-Do">To-Do</option>
+                                    <option {{$requirement->status === 'Done' ? 'selected' : ''}} value="Done">DONE</option>
+                                    <option {{$requirement->status === 'On Progress' ? 'selected' : ''}} value="ON PROGRESS" style="pointer-events:none" >ON PROGRESS</option>
+                                    <option {{$requirement->status === 'To-Do' ? 'selected' : ''}} value="To-Do">TO-DO</option>
                                   </select>
                                   @endif
                                 {{-- @if($requirement->checkbox == 1)
@@ -222,7 +232,7 @@
                               
                           <div class="form-group">        
                             <div class="col-sm-offset-2 col-sm-10">
-                              <button type="submit" class="btn btn-primary">Submit</button>
+                              <button type="submit" class="btn btn-primary" onclick="return confirm('Apakah data sudah benar?');">Submit</button>
                             </div>
                           </div>
                      

@@ -26,6 +26,7 @@ class CreateRequestTable extends Migration
             $table->string('maintenance')->nullable();
             $table->integer('admin_id')->unsigned()->nullable();
             $table->string('admin')->nullable();
+            $table->string('kontak')->nullable();
             $table->string('alasan')->nullable();
             $table->string('kapan')->nullable();
             $table->string('surat')->nullable();

@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <script src="js/main.js"></script>
       <script src="{{ asset('js/app.js') }}" defer></script>
-      <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
+      <script src="http://36.67.25.4:8000/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -65,7 +65,10 @@
       <ul class="dropdown-menu" style="background-color: #273c75; font-size: 20px">
 
         {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
-        <li><a style="background-color:#273c75" href="{{ route('logout') }}" onclick="
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
+        <li><a style="" href="{{ route('logout') }}" onclick="
         event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
@@ -159,15 +162,25 @@
                   </li> -->
               </ul> --}}
           </li>
-          <li >
-              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+          @if(count(auth()->user()->unreadNotifications) != 0)
+          <li  onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
           </li>
-          <li  >
-            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+          @else
+          <li >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
         </li>
+        @endif
         <li>
           <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
       </li>
+    
+      <li  >
+        <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+    </li>
+      <li>
+        <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
+    </li>
       <li  >
         <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
     </li> 
@@ -202,21 +215,50 @@
         <strong>{{Session::get('alert')}}</strong>{{Session::get('msg')}}
     </div>
     @endif
-    
-<div class="row">
-  <div class="col-sm-4">
-    <div class="small-box bg-aqua-gradient">
-      <div class="inner">
-        <h3></h3>
 
-        <h4>Pengajuan Aplikasi</h4>
+    @if( Auth::user()->jabatan === 'admin' or Auth::user()->jabatan === 'programmer')
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="small-box bg-aqua-gradient">
+          <div class="inner">
+            <h3></h3>
+    
+            <h4>Daftar Pengajuan</h4>
+          </div>
+          <div class="icon">
+            <i class="fa fa-laptop" style="font-size:64px;color:white;opacity:0.5;"></i>
+          </div>
+          <a href="/requesta" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></i></a>
+        </div>
       </div>
-      <div class="icon">
-        <i class="fa fa-pencil" style="font-size:64px;color:white;opacity:0.5;"></i>
+      <div class="col-sm-4">
+        <div class="small-box bg-green-gradient">
+          <div class="inner">
+            <h3></h3>
+    
+            <h4>Daftar SKPD</h4>
+          </div>
+          <div class="icon">
+            <i class="fa fa-building" style="font-size:72px;color:white;opacity:0.5;"></i>
+          </div>
+          <a href="/admin" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></a>
+        </div>
       </div>
-      <a href="/inputrequest" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></i></a>
-    </div>
-  </div>
+      <div class="col-sm-4">
+        <div class="small-box bg-purple-gradient">
+          <div class="inner">
+            <h3></h3>
+    
+            <h4>Daftar Aplikasi</h4>
+          </div>
+          <div class="icon">
+            <i class="fa fa-cog" style="font-size:72px;color:white;opacity:0.5;"></i>
+          </div>
+          <a href="/aplikasi" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></a>
+        </div>
+      </div>
+      @else
+<div class="row">
   <div class="col-sm-4">
     <div class="small-box bg-green-gradient">
       <div class="inner">
@@ -231,19 +273,33 @@
     </div>
   </div>
   <div class="col-sm-4">
+    <div class="small-box bg-aqua-gradient">
+      <div class="inner">
+        <h3></h3>
+
+        <h4>Pengajuan Aplikasi</h4>
+      </div>
+      <div class="icon">
+        <i class="fa fa-plus" style="font-size:64px;color:white;opacity:0.5;"></i>
+      </div>
+      <a href="/inputrequest" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></i></a>
+    </div>
+  </div>
+
+  <div class="col-sm-4">
     <div class="small-box bg-red-gradient">
       <div class="inner">
         <h3></h3>
 
-        <h4>Ubah Password</h4>
+        <h4>Input Aplikasi</h4>
       </div>
       <div class="icon">
-        <i class="fa fa-key" style="font-size:72px;color:white;opacity:0.5;"></i>
+        <i class="fa fa-pencil" style="font-size:72px;color:white;opacity:0.5;"></i>
       </div>
-      <a href="/password/change" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></a>
+      <a href="/inputaplikasi" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></a>
     </div>
   </div>
-
+@endif
   @foreach ($requ as $row)
 
 <?php 
@@ -276,11 +332,11 @@ foreach($row->requirements as $r) {
         </div> <!-- end column1 -->
         <div class="column2">
           @if ($row->maintenance == 'MAINTENANCE')
-          <a href="" type="button" class="btn btn-danger">MAINTENANCE</a>
+          <a href="" type="button" class="btn btn-danger" style="pointer-events:none">MAINTENANCE</a>
           @elseif ($row->maintenance == 'ACTIVE')
-          <a href="" type="button" class="btn btn-success">ACTIVE</a>
+          <a href="" type="button" class="btn btn-success"  style="pointer-events:none" >Aktif</a>
           @elseif ($row->maintenance == 'NOT ACTIVE')
-          <a href="" type="button" class="btn btn-secondary">NOT ACTIVE</a>
+          <a href="" type="button" class="btn btn-secondary"  style="pointer-events:none" >Tidak Aktif</a>
           @else
           <a href="" type="button" class="btn btn-danger">ON PROGRESS</a>
           @endif
@@ -374,7 +430,7 @@ function closeForm() {
 // }
 </script>
 <script>
-  const socket = io('http://15.3.22.90:8000/');
+  const socket = io('http://36.67.25.4:8000/');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();

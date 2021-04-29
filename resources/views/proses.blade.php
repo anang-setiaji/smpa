@@ -17,7 +17,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://rawcdn.githack.com/anang-setiaji/smpa/dec02092223f537e9b5100fed42309e3c1dbdcbc/style.css">
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
+    <script src="http://36.67.25.4:8000/socket.io/socket.io.js"></script>
 
     <!-- Font Awesome JS -->
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script> -->
@@ -51,8 +51,9 @@
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
-        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
-        event.preventDefault();
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        <li><a style="" href="{{ route('logout') }}" onclick="        event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
@@ -146,19 +147,29 @@
                         <a href="#">boleh</a>
                     </li> -->
                 </ul> --}}
+              </li>
+              @if(count(auth()->user()->unreadNotifications) != 0)
+              <li onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+                  <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
+              </li>
+              @else
+              <li >
+                <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
             </li>
-            <li class="active">
-                <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+            @endif
+              <li>
+                <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
             </li>
+      
             <li  >
-              <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+              <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
           </li>
-          <li>
-            <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
-        </li>
-        <li  >
-          <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
-      </li> 
+            <li>
+              <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
+          </li>
+            <li  >
+              <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat</a>
+          </li> 
             
                 
   
@@ -231,11 +242,11 @@
               </div> <!-- end column1 -->
               <div class="column2">
                 @if ($request->maintenance == 'MAINTENANCE')
-            <a href="" type="button" class="btn btn-danger">MAINTENANCE</a>
+            <a href="" type="button" class="btn btn-danger" style="pointer-events:none">MAINTENANCE</a>
             @elseif ($request->maintenance == 'ACTIVE')
-            <a href="" type="button" class="btn btn-success">ACTIVE</a>
+            <a href="" type="button" class="btn btn-success"  style="pointer-events:none" >Aktif</a>
             @elseif ($request->maintenance == 'NOT ACTIVE')
-            <a href="" type="button" class="btn btn-secondary">NOT ACTIVE</a>
+            <a href="" type="button" class="btn btn-secondary"  style="pointer-events:none" >Tidak Aktif</a>
             <br>
            
             Alasan tidak aktif : {{$request->alasan}} <br> Tanggal tidak aktif : {{$request->kapan}}
@@ -432,7 +443,7 @@
     <div><span id="day"></span><div class="smalltext">Hari</div></div>
     <div><span id="hour"></span><div class="smalltext">Jam</div></div>
     <div><span id="minute"></span><div class="smalltext">Menit</div></div>
-    <div><span id="second"></span><div class="smalltext">Detik</div></div>
+    {{-- <div><span id="second"></span><div class="smalltext">Detik</div></div> --}}
   </div>
 </div>
 @else

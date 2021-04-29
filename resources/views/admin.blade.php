@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <script src="js/main.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
-  <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
+  <script src="http://36.67.25.4:8000/socket.io/socket.io.js"></script>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -67,7 +67,10 @@
       <ul class="dropdown-menu" style="background-color: #273c75; font-size: 20px">
 
         {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
-        <li><a style="background-color:#273c75" href="{{ route('logout') }}" onclick="
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
+        <li><a style="" href="{{ route('logout') }}" onclick="
         event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
@@ -117,15 +120,25 @@
                 </li> -->
             </ul> --}}
         </li>
-        <li >
-            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
+        @if(count(auth()->user()->unreadNotifications) != 0)
+        <li onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
         </li>
-        <li class="active" >
-          <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+        @else
+        <li >
+          <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
       </li>
-      <li>
-        <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
-    </li>
+      @endif
+        <li>
+          <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+      </li>
+        <li >
+          <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+      </li>
+      
+    <li class="active">
+      <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i>  Admin</a>
+  </li>
     <li>
       <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat           
         <span class="badge unread-indicator" style="background-color:red;font-size:15px;width:20px;height:20px"></span>
@@ -164,7 +177,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">SKPD &nbsp;
          @if(auth()->user()->jabatan == 'admin')
-        <a href="inputadmin" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a>
+        <a href="{{ url('inputadmin')}}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</a>
         </div>
         @else
         <div></div>
@@ -187,9 +200,9 @@
                 <div class="containeradmin">
                   <h5><b>{{$row->name}}</b></h5> 
                   <p>SKPD</p> 
-                  <a href="{{ url('editadmin')}}/{{$row ->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
+                  <a href="{{ url('editadmin')}}/{{$row ->email }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a>
 
-                  <a style="" href="{{ url('hapusadmin')}}/{{$row ->id }}" type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>            
+                  <a style="" href="{{ url('hapusadmin')}}/{{$row ->id }}" type="submit" onclick="return confirm('Apakah anda yakin menghapus ini?');" class="btn btn-default"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>            
                 </div>
                 <br>
               </div>
@@ -252,7 +265,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('http://15.3.22.90:8000');
+    const socket = io('http://36.67.25.4:8000');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();

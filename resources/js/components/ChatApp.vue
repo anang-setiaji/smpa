@@ -10,7 +10,7 @@
     import ContactsList from './ContactsList';
     
 
-    const socket = io('http://15.3.22.90:8000/');
+    const socket = io('http://36.67.25.4:8000/');
 
     export default {
         props: {

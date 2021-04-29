@@ -48,7 +48,10 @@
       <ul class="dropdown-menu" style="background-color: #273c75; font-size: 20px">
 
         {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
-        <li><a style="background-color:#273c75" href="{{ route('logout') }}" onclick="
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
+        <li><a style="" href="{{ route('logout') }}" onclick="
         event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>

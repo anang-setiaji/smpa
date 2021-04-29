@@ -48,7 +48,7 @@
                 </div>
                 <div class="form-group">
                   <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default" onclick="return confirm('Apakah data sudah benar dan lengkap?');">Submit</button>
                   </div>
                 </div>
             </form>

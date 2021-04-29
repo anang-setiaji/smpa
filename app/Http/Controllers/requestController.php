@@ -52,6 +52,7 @@ public function simpanrequest(Request $request)
         'penjelasan' => 'required',
         'lampiran' =>  'required|mimes:pdf',
         'countdown' => 'required',
+        'syarat' => 'required',
 
     ]);
 
@@ -115,7 +116,7 @@ public function ubahrequest(Request $request)
     $validatedData = $request->validate([
         
         'surat' =>  'required|mimes:pdf',
-       
+        'status' => 'required',
 
     ]);
 
@@ -142,7 +143,9 @@ public function ubahrequest(Request $request)
     $requ->save();
     
 }
-    $notif = User::where('jabatan', '=', 'programmer')->get();
+    $admin     = $request->input('admin_id');
+
+    $notif = User::where('id', $admin)->get();
 
     Notification::send($notif, new RepliedToThread($requ));
 
@@ -291,23 +294,23 @@ public function downfunc(){
    
      if($requ->logo === null)
      {
-     $file = $request->file('logo');
-     
-     $destinationPath = 'uploads';
-     $size = $file->getSize();
-     $extension = $file->getClientOriginalExtension();
-     $fileName = $file->getClientOriginalName();
-     $upload_success = $file->move($destinationPath, $fileName);
-     $requ->aplikasi = $request->input('aplikasi');
-     $requ->maintenance = $request->input('maintenance');
-     $requ->alasan = $request->input('alasan');
-     $requ->kapan = $request->input('kapan');
-     $requ->link = $request->input('link');
-     // $requ->userguide = $fileName;
-     $requ->filenames = $request->input('filenames');
-     $requ->logo = $fileName;
-     $requ->filenames=json_encode($data);
-     $requ->save();
+        $file = $request->file('logo');
+        
+        $destinationPath = 'uploads';
+        $size = $file->getSize();
+        $extension = $file->getClientOriginalExtension();
+        $fileName = $file->getClientOriginalName();
+        $upload_success = $file->move($destinationPath, $fileName);
+        $requ->aplikasi = $request->input('aplikasi');
+        $requ->maintenance = $request->input('maintenance');
+        $requ->alasan = $request->input('alasan');
+        $requ->kapan = $request->input('kapan');
+        $requ->link = $request->input('link');
+        // $requ->userguide = $fileName;
+        $requ->filenames = $request->input('filenames');
+        $requ->logo = $fileName;
+        $requ->filenames=json_encode($data);
+        $requ->save();
      }
      
      else{
@@ -319,8 +322,12 @@ public function downfunc(){
         $requ->link = $request->input('link');
         $requ->logo = $request->input('logo');
         // $requ->userguide = $fileName;
-        $requ->filenames=json_encode($data);
-        $requ->save();
+     
+        $fileExists = $request->input('fileExists');
+        //  dd($fileExists);
+        //  dd($pictures);
+         $requ->filenames=json_encode(array_merge($data, $fileExists));
+         $requ->save();
      }    
         return redirect()->action('requestController@request')->with('style', 'success')->with('alert', 'Berhasil Diubah ! ')->with('msg', 'Data Diubah Di Database');
     }

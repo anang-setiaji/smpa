@@ -47,8 +47,9 @@
       <ul class="dropdown-menu" style="background-color: #162e46; font-size: 20px">
 
         {{-- <li><a style="background-color:#162e46" href="/profile">Profile</a></li> --}}
-        <li><a style="background-color:#162e46" href="{{ route('logout') }}" onclick="
-        event.preventDefault();
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        <li><a style="" href="{{ route('logout') }}" onclick="        event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
@@ -135,19 +136,38 @@
               <div class="container">
                 <div class="panel panel-default">
                   <div class="panel-heading">Form &nbsp;
-                  <a href="inputrequest" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Request</a>
-                  <a href="inputaplikasi" type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Input Aplikasi</a>
             
                 </div>
-                      @error('surat')
-                      <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran diisi dengan format pdf</div>
-                      @enderror
+                @error('aplikasi')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Nama Aplikasi harap diisi</div>
+                @enderror
+                @error('penjelasan')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Penjelasan harap diisi</div>
+                @enderror
+                @error('surat')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Lampiran diisi dengan format pdf</div>
+                @enderror
+                @error('link')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Link harap diisi</div>
+                @enderror
+                @error('logo')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Logo Aplikasi harap diisi</div>
+                @enderror
+                @error('kontak')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Kontak harap diisi</div>
+                @enderror
+                @error('admin')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Nama Developer harap diisi</div>
+                @enderror
+                {{-- @error('filenames')
+                <div style="color:white;font-size:16px;border-radius:15px" class="alert alert-danger">Gambar Aplikasi harap diisi</div>
+                @enderror --}}
                         <form class="form-horizontal" action=""  method="post" enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <div class="form-group">
-                              <label class="control-label col-sm-2">Nama SKPD:</label>
+                            
                               <div class="col-sm-10">
-                                <input type="text" style="width:400px; height:30px;"  name="nama" value="{{ Auth::user()->name}}" readonly>
+                                <input type="hidden" style="width:400px; height:30px;"  name="nama" value="{{ Auth::user()->name}}" readonly>
                               </div>
                             </div>
             
@@ -172,6 +192,20 @@
                             </div>
 
                             <div class="form-group">
+                              <label class="control-label col-sm-2">Nama Developer/Programmer:</label>
+                              <div class="col-sm-10">          
+                                <textarea class="form-control" name="admin"></textarea>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="control-label col-sm-2">Kontak Developer:</label>
+                              <div class="col-sm-10">          
+                                <textarea class="form-control" name="kontak"></textarea>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
                               <label class="control-label col-sm-2">Lampiran (PDF):</label>
                               <div class="col-sm-10">         
                                 
@@ -184,7 +218,7 @@
                                 padding: 0.7rem;
                                 font-family: sans-serif;
                                 border-radius: 0.3rem;
-                                cursor: pointer;
+                              
                                 ">Pilih File</label>
                                 
                                 <!-- name of file chosen -->
@@ -192,7 +226,51 @@
                                 font-family: sans-serif;">(Berisi surat mengenai aplikasi)        
                                 </span>                              
                               </div>
+                            </div>
                               
+                              <div class="form-group">
+                                <label class="control-label col-sm-2">Logo Aplikasi:</label>
+                                <div class="col-sm-10">         
+                                  
+                                  <!-- actual upload which is hidden -->
+                                  <input type="file" id="actual-btns" class="hidden" name="logo"/>                                
+                                  <!-- our custom upload button -->
+                                  <label for="actual-btns" 
+                                  style="background-color:#337ab7;
+                                  color: white;
+                                  padding: 0.7rem;
+                                  font-family: sans-serif;
+                                  border-radius: 0.3rem;
+                            
+                                  ">Pilih gambar</label>
+                                  
+                                  <!-- name of file chosen -->
+                                  <span id="file-chosens" style="margin-left: 0.3rem;
+                                  font-family: sans-serif;">(Logo Aplikasi)   
+                                  </span>                              
+                                </div>
+                              </div>
+                              <div class="form-group">
+                                <label class="control-label col-sm-2">Gambar aplikasi: </label>
+                                <div class="col-sm-4">          
+                              <div class="input-group hdtuto control-group lst increment" >
+                                <input type="file" name="filenames[]" class="myfrm form-control">
+                                <div class="input-group-btn"> 
+                                  <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-sm-4">
+                              <div class="clone hide">
+                                <div class="hdtuto control-group lst input-group" style="margin-top:10px">
+                                  <input type="file" name="filenames[]" class="myfrm form-control">
+                                  <div class="input-group-btn"> 
+                                    <button id="remove" class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
+                                 
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                             </div> 
                             <div class="form-group" style="display:none">
                               <label class="control-label col-sm-2">Fitur:</label>
@@ -222,7 +300,7 @@
                             </div> -->
                             <div class="form-group">        
                               <div class="col-sm-offset-2 col-sm-10">
-                                <button style="background-color:#337ab7;color:white;"type="submit" class="btn btn-default">Submit</button>
+                                <button style="background-color:#337ab7;color:white;"type="submit" onclick="return confirm('Apakah data sudah benar dan lengkap?');" class="btn btn-default">Submit</button>
                               </div>
                             </div>
                         </form>
@@ -270,4 +348,27 @@ $(document).ready(function () {
     fileChosen.textContent = this.files[0].name
   });
   </script>
+
+<script type="text/javascript">
+
+  const actualBtns = document.getElementById('actual-btns');
+  
+  const fileChosens = document.getElementById('file-chosens');
+  
+  actualBtns.addEventListener('change', function(){
+    fileChosens.textContent = this.files[0].name
+  });
+  </script>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $(".btn-success").click(function(){ 
+        var lsthmtl = $(".clone").html();
+        $(".increment").after(lsthmtl);
+    });
+    $("#remove").on("click",".btn-danger",function(){ 
+        $(this).parents(".hdtuto control-group lst").remove();
+    });
+  });
+</script>
 </html>

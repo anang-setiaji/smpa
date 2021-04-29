@@ -10,11 +10,11 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
   <script src="js/main.js"></script>
   <script src="{{ asset('js/app.js') }}" defer></script>
-  {{-- <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script> --}}
+  {{-- <script src="http://36.67.25.4:8000/socket.io/socket.io.js"></script> --}}
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://rawcdn.githack.com/ridhowise/SiPA/3a0d4b873f5d5db84f4ee86a01914ff9cc8d139f/style.css">
+    <link rel="stylesheet" href="{{ url('assets_dashboard')}}/style.css">
     <link rel="stylesheet" href="js/ionicons.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.0.0/ionicons.min.js"></script>
     <!-- Font Awesome JS -->
@@ -67,7 +67,10 @@
       <ul class="dropdown-menu" style="background-color: #273c75; font-size: 20px">
 
         {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
-        <li><a style="background-color:#273c75" href="{{ route('logout') }}" onclick="
+       <li><a href="{{url('password')}}/change">Ganti Password</a></li>
+
+        {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
+        <li><a style="" href="{{ route('logout') }}" onclick="
         event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
@@ -118,14 +121,23 @@
                       </li> -->
                   </ul> --}}
               </li>
-              <li >
-                  <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
-              </li>
-              <li  >
-                <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+              @if(count(auth()->user()->unreadNotifications) != 0)
+        <li onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
+        </li>
+        @else
+        <li >
+          <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
+      </li>
+      @endif
+              <li class="active">
+                <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
             </li>
-            <li class="active">
-              <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
+            <li  >
+              <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+          </li>
+            <li>
+              <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
           </li>
           <li>
             <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat           
@@ -189,20 +201,25 @@ foreach($row->requirements as $r) {
           <div class="containeradmin">
             <h4><b>{{$row->aplikasi}}</b></h4> 
             <h5><b>{{$row->nama}}</b></h5> 
+            @if($percentage === 100 or $row->status === '2')
+            <div class="btn-group">
+              <a href="" onClick="fetchdata('{{$row->id}}')" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i></a>
+            </div>
+            @else
             <a href="{{ url('proses')}}/{{$row ->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
-
+            @endif
             <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
 
             <a href="http://{{ $row->link }}" type="button" class="btn btn-primary">LINK DEMO</a>
 
             @if ($row->maintenance == 'MAINTENANCE')
-            <a href="" type="button" class="btn btn-danger">MAINTENANCE</a>
+            <a href="" type="button" class="btn btn-danger" style="pointer-events:none" >MAINTENANCE</a>
             @elseif ($row->maintenance == 'ACTIVE')
-            <a href="" type="button" class="btn btn-success">ACTIVE</a>
+            <a href="" type="button" class="btn btn-success"  style="pointer-events:none" >AKTIF</a>
             @elseif ($row->maintenance == 'NOT ACTIVE')
-            <a href="" type="button" class="btn btn-secondary">NOT ACTIVE</a>
+            <a href="" type="button" class="btn btn-secondary"  style="pointer-events:none" >TIDAK AKTIF/a>
             @else
-            <a href="" type="button" class="btn btn-danger">ON PROGRESS</a>
+            <a href="" type="button" class="btn btn-danger" style="pointer-events:none" >ON PROGRESS</a>
             @endif
           </div>
           <br>
@@ -248,19 +265,24 @@ foreach($row->requirements as $r) {
           <div class="containeradmin">
             <h4><b>{{$row->aplikasi}}</b></h4> 
             <h5><b>{{$row->nama}}</b></h5> 
+            @if($percentage === 100 or $row->status === '2')
+            <div class="btn-group">
+              <a href="" onClick="fetchdata('{{$row->id}}')" data-toggle="modal" data-target="#largeModal" type="button" class="btn btn-primary"><i class="fa fa-eye" style="color:white"></i></a>
+            </div>
+            @else
             <a href="{{ url('proses')}}/{{$row ->id }}" type="button" class="btn btn-default"><i class="fa fa-eye" style="color:black"></i></a>
-
+            @endif
             <a href="{{ url('editaplikasi')}}/{{$row ->id }}" type="button" class="btn btn-primary"><i class= "fa fa-pencil" ></i></a>
             <a href="http://{{ $row->link }}" type="button" class="btn btn-primary">LINK DEMO</a>
 
             @if ($row->maintenance == 'MAINTENANCE')
-            <a href="" type="button" class="btn btn-danger">MAINTENANCE</a>
+            <a href="" type="button" class="btn btn-danger" style="pointer-events:none">MAINTENANCE</a>
             @elseif ($row->maintenance == 'ACTIVE')
-            <a href="" type="button" class="btn btn-success">ACTIVE</a>
+            <a href="" type="button" class="btn btn-success"  style="pointer-events:none" >AKTIF</a>
             @elseif ($row->maintenance == 'NOT ACTIVE')
-            <a href="" type="button" class="btn btn-secondary">NOT ACTIVE</a>
+            <a href="" type="button" class="btn btn-secondary"  style="pointer-events:none" >TIDAK AKTIF</a>
             @else
-            <a href="" type="button" class="btn btn-danger">ON PROGRESS</a>
+            <a href="" type="button" class="btn btn-danger" style="pointer-events:none">ON PROGRESS</a>
             @endif
 
           </div>
@@ -328,18 +350,58 @@ foreach($row->requirements as $r) {
       <a href="#">tutup</a>
       <img src="" />
     </div>
+    <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="largeModal" aria-hidden="true" >
+      <div class="modal-dialog-scrollable modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Details</h4>
+          </div>
+          <div class="modal-body" style="background-color:#f0f0f0;">
+            <figure class="snip0056 blue" >
+              <figcaption id="caption">
+                <h2 id="namaaplikasi"></h2>
+                {{-- <h2 id="namaaplikasi"></h2> --}}
+                <p id="penjelasan"></p>
+                <a href="" type="button" class="btn btn-primary btn-lg btn-block" id="link" style=>LINK </a>
+  
+                <div class="icons"><a href="#"><i class="ion-ios-home"></i></a><a href="#"><i class="ion-ios-email"></i></a><a href="#"><i class="ion-ios-telephone"></i></a></div>
+              </figcaption><img id="logo" src="" alt="sample8" />
+                        
+              {{-- <img id="logo" src="https://i.ibb.co/Khc9B04/Manset-Putih.png" alt="sample8" /> --}}
+              <div class="position">Aplikasi</div>
+            </figure>
+  
+            <br>
+            <div class="owl-carousel owl-theme mt-5" id="carouselimg">
+              
+             
+            </div>
+          </div>
+          
+  
+          <button class="btn btn-primary btn-lg btn-block" id="developers">Developer team  <i class="fas fa-chevron-down"></i></button>
+          <div class="detaildevelopers" style="display:none">
+            <p id="admin">This is a paragraph with little content.</p>
+           
+          </div>
+          {{-- <button class="btn btn-primary btn-lg btn-block" id="assets">Assets <i class="fas fa-chevron-down"></i> </button>
+          <div class="assets" style="display:none">
+            <p>This is a paragraph with little content.</p>
+            <p>This is another small paragraph.</p>
+          </div> --}}
+        </div>
+      </div>
+    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
+
 <script type="text/javascript">
+
 $(document).ready(function () {
-    const socket = io('http://15.3.22.90:8000');
-    socket.on('updateWarning', () => {
-      console.log('masuk');
-      getUpdate();
-    });
-    getUpdate();
+    
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar').toggleClass('active');
     });
@@ -372,6 +434,90 @@ function openForm(id) {
 function closeForm() {
   document.getElementById("myForm").style.display = "none";
 }
+
+// function openForms() {
+//   document.getElementById("myForm").style.display = "block";
+// }
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.green.min.css"/>
+<script>
+jQuery(document).ready(function($){
+  $('.owl-carousel').owlCarousel({
+ 
+    margin:10,
+    nav:true,
+    responsive:{
+      0:{
+        items:1
+      },
+      600:{
+        items:2
+      },
+      1000:{
+        items:3
+      }
+    }
+  });
+  
+  window.fetchdata = function (id) {
+      $.ajax({
+        method:'GET',
+        url:"{{url('request')}}/"+id,
+        success:function(res){
+          const carousel = $('.owl-carousel');
+          carousel.trigger('destroy.owl.carousel'); 
+          carousel.find('.owl-stage-outer').children().unwrap();
+          carousel.removeClass("owl-center owl-loaded owl-text-select-on");
+
+          const images = JSON.parse(res.data.filenames);
+          let el = '';
+          images.forEach(function(image){
+            el += `
+              <div class="item"><a href=""><img src="uploads/`+image+`"></a></div>
+            `
+          });
+          carousel.html(el);
+          carousel.owlCarousel();
+          $(".snip0056 #logo").attr('src','uploads/'+res.data.logo);
+          $(".snip0056 #namaaplikasi").html(res.data.aplikasi);
+          $(".snip0056 #penjelasan").html(res.data.penjelasan);
+          $(".detaildevelopers #admin").html(res.data.admin.name);
+          $(".snip0056 #link").attr('href','https://'+res.data.link);
+          $("#largeModal [name='id']").val(id);
+        }
+      });
+    }
+})
+
+</script>
+
+
+
+<script>
+  $(document).ready(function(){
+    $('#developers').click(function(){
+      $('.detaildevelopers').toggle();
+    });
+  });
+  $(document).ready(function(){
+    $('#assets').click(function(){
+      $('.assets').toggle();
+    });
+  });
+ 
+  </script>
+
+<script>
+  const socket = io('http://36.67.25.4:8000');
+    socket.on('updateWarning', () => {
+      console.log('masuk');
+      getUpdate();
+    });
+    getUpdate();
+</script>
+
 
 </html>

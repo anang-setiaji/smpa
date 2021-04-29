@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ionicons/5.0.0/ionicons.min.js"></script>
     <!-- Font Awesome JS -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="http://15.3.22.90:8000/socket.io/socket.io.js"></script>
+    <script src="http://36.67.25.4:8000/socket.io/socket.io.js"></script>
     <script src="js/main.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {{-- <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
@@ -69,19 +69,19 @@
       <i class= "fa fa-user" ></i>  {{ Auth::user()->name}}
       <span class="caret"></span></a>
       <ul class="dropdown-menu" style="background-color: #273c75; font-size: 20px">
+        <li><a href="{{url('password')}}/change">Ganti Password</a></li>
 
-        {{-- <li><a style="background-color:#273c75" href="/profile">Profil</a></li> --}}
-        <li><a style="background-color:#273c75" href="{{ route('logout') }}" onclick="
+        <li><a style="" href="{{ route('logout') }}" onclick="
         event.preventDefault();
         document.getElementById('logout-form').submit()
         " >Logout</a></li>
         <form action="{{ route('logout') }}" method="post" id="logout-form" style="display: none;">
           {{ csrf_field() }}
         </form>
-        <!-- <li><a href="#">CSS</a></li>
-        <li><a href="#">Bootstrap</a></li> -->
+        {{-- <!-- <li><a href="#">CSS</a></li> --}}
       </ul>
     </li>
+
   </ul>
 
         <!-- <li><a href="{{ route('logout') }}" onclick="
@@ -121,16 +121,26 @@
                   </li> -->
               </ul> --}}
           </li>
-          <li  >
-              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan</a>
+          @if(count(auth()->user()->unreadNotifications) != 0)
+          <li onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" >
+              <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span> </a>
           </li>
-          <li  >
-            <a href="/admin"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+          @else
+          <li >
+            <a href="/requesta"><i class="fa fa-laptop" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Pengajuan </a>
         </li>
+        @endif
+          
         <li>
           <a href="/aplikasi"><i class="fa fa-cogs" style="font-size:24px;color:white;opacity:0.5;"></i> Daftar Aplikasi</a>
       </li>
-      
+    
+      <li  >
+        <a href="/daftarskpd"><i class="fa fa-building" style="font-size:24px;color:white;opacity:0.5;"></i> SKPD</a>
+    </li>
+      <li>
+        <a href="/admin"><i class="fa fa-user" style="font-size:24px;color:white;opacity:0.5;"></i> Admin</a>
+    </li>
       <li  >
         <a href="/chats"><i class="fa fa-comments" style="font-size:24px;color:white;opacity:0.5;"></i> Chat           
           <span class="badge unread-indicator" style="background-color:red;font-size:15px;width:20px;height:20px"></span>
@@ -171,13 +181,18 @@
     <div class="small-box bg-aqua-gradient">
       <div class="inner">
         <h3></h3>
-
+        @if(count(auth()->user()->unreadNotifications) != 0)
+        <h4>Daftar Pengajuan  <span class="badge" style="background-color:red;font-size:16px;margin-left:7px"> {{count(auth()->user()->unreadNotifications)}}</span>
+        </h4>
+        @else
         <h4>Daftar Pengajuan</h4>
+        @endif
+
       </div>
       <div class="icon">
         <i class="fa fa-laptop" style="font-size:64px;color:white;opacity:0.5;"></i>
       </div>
-      <a href="/requesta" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></i></a>
+      <a onclick="markNotificationAsRead({{count(auth()->user()->unreadNotifications)}})" href="/requesta" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></i></a>
     </div>
   </div>
   <div class="col-sm-4">
@@ -206,6 +221,7 @@
       <a href="/aplikasi" class="small-box-footer"><i class="fa fa-arrow-circle-right" style="font-size:24px;color:white;"></i></a>
     </div>
   </div>
+
   
   <h1 style="text-align:center;margin-top:200px"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> Project Timeline</h1>
   <section class="timeline" style="margin-top:30px">
@@ -352,7 +368,7 @@ $days = $interval->format("%r%a");
 
 <script type="text/javascript">
 $(document).ready(function () {
-    const socket = io('http://15.3.22.90:8000');
+    const socket = io('http://36.67.25.4:8000');
     socket.on('updateWarning', () => {
       console.log('masuk');
       getUpdate();

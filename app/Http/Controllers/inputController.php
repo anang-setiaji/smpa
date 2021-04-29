@@ -12,6 +12,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Auth;
 use DB;
+use Image;
 
 class inputController extends BaseController
 {
@@ -32,6 +33,45 @@ class inputController extends BaseController
 public function simpanrequest(Request $request)
 {
 
+
+     
+    $validatedData = $request->validate([
+        'aplikasi' => 'required',
+        'penjelasan' => 'required',
+        'surat' =>  'required|mimes:pdf',
+        'logo' =>  'required|mimes:jpeg,png,jpg,gif,svg|max:5048',
+        // 'filenames' =>  'required|mimes:jpeg,png,jpg,gif,svg|max:5048',
+        'admin' => 'required',
+        'kontak' => 'required',
+        'link' => 'required',
+
+    ]);
+        $data = [];
+
+    if($request->hasfile('filenames'))
+     {
+        //  dd($request->file('filenames'));
+        foreach($request->file('filenames') as $file)
+        {
+            $name = sha1($file->getClientOriginalName().microtime()).'.'.$file->extension();
+            $file->move(public_path().'/uploads/', $name);  
+            $data[] = $name;  
+        }
+     }
+     if ($request->file('logo')) {
+        $image = $request->file('logo');
+
+        $file_name = time(). rand(1111, 9999) . '.' .$image->getClientOriginalExtension();
+
+        // $save_Path = 'images/'.$file_name;
+        //$save_Path = public_path('images/'.$file_name);
+
+        //Image::make($image->getRealPath())->resize(300, 236)->save($save_Path);
+        $image->move('uploads',$file_name);
+        \Image::make('uploads/'.$file_name)->save('uploads/'.$file_name);
+    } else {
+        $file_name = null;
+    }
     $file = $request->file('surat');
   
     $destinationPath = 'uploads';
@@ -52,8 +92,11 @@ public function simpanrequest(Request $request)
             $requ->link = $request->input('link');
             $requ->keterangan = $request->input('keterangan');
             $requ->users_id = Auth::user()->id;
+            $requ->filenames=json_encode($data);
+            $requ->admin = $request->input('admin');
+            $requ->kontak = $request->input('kontak');
+            $requ->logo = $file_name;
 
- 
             $requ->save();
 
             $syarats = $request->input('syarat');
